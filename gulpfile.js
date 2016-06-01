@@ -13,6 +13,7 @@ var gulp         = require('gulp'),
 gulp.task('build', function(callback) {
   runSequence('clean',
               ['build-styles', 'build-scripts', 'build-php', 'build-php-index','imgmin'],
+              'browser-sync',
               callback);
   gulp.watch('src/sass/**/*.scss', ['build-styles']);
   gulp.watch('src/js/**/*.js', ['build-scripts']);
@@ -23,6 +24,7 @@ gulp.task('build', function(callback) {
 gulp.task('dev', function(callback) {
   runSequence('clean',
               ['dev-styles', 'dev-scripts', 'dev-php', 'dev-php-index','imgmin'],
+              'browser-sync',
               callback);
   gulp.watch('src/sass/**/*.scss', ['dev-styles']);
   gulp.watch('src/js/**/*.js', ['dev-scripts']);
@@ -37,6 +39,13 @@ gulp.task('clean', function () {
   ]);
 });
 
+// For dynamic sites
+gulp.task('browser-sync', function() {
+    browserSync.init({
+        proxy: "transport.dev"
+    });
+});
+
 gulp.task('build-php', () => gulp.src('src/core/**/*.php', { read: false })
   .pipe(phpMinify({ binary: 'C:\\Program Files \(x86\)\\Ampps\\php\\php.exe' }))
   .pipe(gulp.dest('dist/core/'))
@@ -49,6 +58,7 @@ gulp.task('dev-php', () => gulp.src('src/core/**/*.php', { read: false })
 gulp.task('build-php-index', () => gulp.src('src/index.php', { read: false })
   .pipe(phpMinify({ binary: 'C:\\Program Files \(x86\)\\Ampps\\php\\php.exe' }))
   .pipe(gulp.dest('dist/'))
+  .pipe(browserSync.reload({stream:true}))
 );
 
 gulp.task('dev-php-index', () => gulp.src('src/index.php', { read: false })

@@ -24,12 +24,14 @@
       <?php
  for($i=0; $i < count($dataList); $i++){ print '<table>
                   <tr><td>' . $dataList[$i] . '</td></tr>
-                   <tr>'; $transport->renderList($transport->getDataFromFile($dataList[$i])); } print '  </tr>
-               </table>'; ?> 
+                   <tr>'; $transport->renderList($transport->getDataFromFile($dataList[$i])); print '  </tr>
+               </table>
+               '; } ?> 
         
     </div>
   </main>
   <footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script src="<?php echo (file_exists('js/javascript.min.js')) ? 'js/javascript.min.js' : 'js/javascript.js' ?>"></script>
     <div class="container text-center">
       Corey R. Montgomery

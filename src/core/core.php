@@ -35,7 +35,6 @@ class Transport
         $length = $length - 1;
         $i = 0;
 
-
         foreach($data as $fkey => $array){
           foreach($array as $key => $item){
             print '<td>' . $item . '</td>

@@ -1,0 +1,68 @@
+// TODO Source:  Stackoverflow. Need to find link.
+@mixin modal($height, $width, $color-start, $color-stop) {
+  //background: $color-start;
+  @extend .grey.darken-4;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px #000;
+  color: #fff;
+  display: none;
+  height: $height;
+  left:0; right:0;
+  margin:auto;
+  /*this to solve "the content will not be cut when the window is smaller than the content": */
+  max-width:100%;
+  max-height:100%;
+  overflow:hidden;
+  padding: 20px;
+  position: fixed; /*it can be fixed too*/
+  top:0; bottom:0;
+  width: $width;
+  z-index: 2;
+  transform: opacity .4s ease;
+}
+
+@mixin modal-responsive($height, $width, $color-start, $color-stop) {
+  //@extend .grey.darken-4; // background color
+  background: $color-start;
+  color: #fff;
+  display: none;
+  height: $height;
+  left: 0;
+  margin:auto;
+  //max-height:100%;
+  max-width: $width;
+  padding: 20px;
+  position: absolute; /*it can be fixed too*/
+  right:0;
+  top:0; 
+  transform: opacity .4s ease;
+  overflow: hidden;
+  z-index: 2;
+  bottom: 0;
+}
+
+@mixin modal-overlay() {
+  background: rgba(77,77,74,1);
+  display: none;
+  height: 100%;
+  left: 0;
+  opacity: 0.5;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+  transform: opacity 1s ease;
+}
+
+@mixin modal-overlay-responsive($background) {
+  background-color: $background;
+  display: none;
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+  //opacity: 1;
+  transform: opacity 0.5s ease;
+}

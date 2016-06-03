@@ -1,0 +1,103 @@
+#header {
+  @extend .grey.darken-4;
+  padding: 20px 0;
+  
+  button {
+    background-color: transparent !important;
+    @extend .grey-text.text-lighten-1;
+    font-size: 1em;
+    padding: 0;
+  }
+  
+  a:link,
+  a:visited {
+    @extend .grey-text.text-lighten-1;
+    transition: all .3s ease;
+  }
+  
+  a:hover,
+  a:active,
+  button:hover,
+  button:active {
+    color: #f5f5f5 !important; // TODO figure out why can't extend
+  }
+}
+
+#main-menu {
+  li {
+    padding-right: 10px;
+  }
+}
+
+#user-menu {
+  li {
+    color: #fff;
+    padding-left: 10px;
+  }
+}
+
+#breadcrumbs-row {
+  @extend .grey.lighten-4;
+}
+
+#breadcrumbs {
+  margin: 10px 0 3px 0;
+
+  li {
+    padding-right: 10px;
+    vertical-align: middle;
+  }
+
+  li:nth-child(odd){
+    padding-top: 2px;
+  }
+}
+
+#sub-menu-wrapper {
+  
+}
+
+#sub-menu {
+  
+  padding: 10px 0;
+  
+  // SHAME!!!
+  #page-title {
+    position: relative;
+    top: 5px;
+    font-size: 1.2em;
+  }
+  
+  button {
+    clear: both;
+    float: right;
+  }
+}
+
+#btn-create-event {
+  background-color: #57859D !important;
+  color: #fff;
+}
+
+#btn-create-event:hover,
+#btn-create-event:active {
+  background-color: #E74C6E !important;
+}
+
+#btn-create-event, .event-location  {
+  i {
+    font-size: 1.5em;
+    margin: 0;
+    padding: 0;
+    vertical-align: middle;
+  }
+  
+  span {
+    display: inline-flex;
+    vertical-align: middle;
+  }
+}
+
+.event-location {
+ 
+}

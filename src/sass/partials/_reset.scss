@@ -1,0 +1,178 @@
+// BASE
+html {
+  height: 100%;
+}
+
+body {
+  @extend .grey.lighten-4;
+  color: black;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+// RESETS
+*,
+*:after,
+*:before {
+  box-sizing: border-box;
+}
+
+// HEADINGS
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: sans-serif;;
+  font-weight: normal;
+  margin: 0 0 20px 0;
+}
+
+h1 small,
+h2 small,
+h3 small,
+h4 small,
+h5 small,
+h6 small {
+  color: sans-serif;
+  font-size: 0.70em;
+}
+
+h1 {
+  font-size: 2.25em; // 36px
+}
+
+h2 {
+  font-size: 1.875em; // 30px
+}
+
+h3 {
+  font-size: 1.5em; // 24px
+}
+
+h4 {
+  font-size: 1.125em; // 18px
+}
+
+h5 {
+  font-size: 0.875em; // 14px;
+}
+
+h6 {
+  font-size: 0.75em; //12px;
+}
+
+p {
+  font-family: sans-serif;
+}
+
+// IMAGES
+img {
+  vertical-align: top;
+}
+
+img.dynamic {
+  width: 100%;
+}
+
+// Links
+a:link,
+a:visited,
+a:hover,
+a:active {
+  text-decoration: none;
+}
+
+a:link, a:visited {
+  color: green;
+}
+
+// TEXT
+.text-upper {
+  text-transform: uppercase;
+}
+
+// Text Alignment
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+// FLOAT ALIGNMENTS
+.float-left {
+  float: left;
+}
+
+.float-right {
+  float: right;
+}
+
+// BORDERS
+$border-color: #ccc;
+
+.border-all {
+  border: 1px solid $border-color;
+}
+
+.border-top {
+  border-top: 1px solid $border-color;
+}
+
+.border-right {
+  border-right: 1px solid $border-color;
+}
+
+.border-bottom {
+  border-bottom: 1px solid $border-color;
+}
+
+.border-left {
+  border-left: 1px solid $border-color;
+}
+
+// INLINE LIST
+.ul-inline {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+}
+
+.ul-inline li {
+  display: inline-block;
+  float: left;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+// Buttons
+button {
+  border: 0;
+  cursor: pointer;
+  padding: 10px 15px;
+}
+
+button:focus {
+  outline: none;
+}
+
+// Page Titles
+#page-title-container {
+  margin: 15px 0;
+}
+
+// Sample
+[id$='-sample'] {
+  display: none !important;
+}

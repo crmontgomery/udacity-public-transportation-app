@@ -1,5 +1,5 @@
 <?php
-require_once('core/core.php');
+  require_once('core/core.php');
 ?> 
 
 <!doctype html>
@@ -9,11 +9,18 @@ require_once('core/core.php');
   <title>Public Transportation App</title>
   <meta name="description" content="A publice transportation app.">
   <meta name="author" content="Corey R. Montgomery">
-  <link rel="stylesheet" href="css/stylesheet.css">
+  <link rel="stylesheet" href="css/stylesheet.min.css">
 </head>
 
 <body>
-  <h1>Transportation App</h1>
+  
+  <div class="container">
+    <h1>Transportation App</h1> 
+    <?php
+      $transport->debug($transport->getDataFromFile($dataList[1]));
+    ?> 
+    
+  </div>
   <script src="<?php echo (file_exists('js/javascript.min.js')) ? 'js/javascript.min.js' : 'js/javascript.js' ?>"></script>
 </body>
 </html>

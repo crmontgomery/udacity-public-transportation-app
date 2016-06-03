@@ -1,0 +1,239 @@
+.container {
+	margin: 0 auto;
+	max-width: $width;
+}
+
+[class*='col-'] {
+  display: inline-block;
+  float: left;
+  margin-right: $margin; //18px gutter
+  //padding: 10px;
+}
+
+[class*='col-'].reset {
+  display: inline-block;
+  float: left;
+  margin-right: 0; //18px gutter
+  //padding: 10px;
+}
+
+// used to clear padding on col items ending in -x
+[class*='-x'] {
+  padding: 0;
+}
+
+[class*='col-']:last-of-type {
+  margin-right: 0;
+}
+
+.row:after,
+.container:after {
+  clear: both;
+  content:"";
+  display: table;
+}
+
+// Grid components
+.row {
+  float: left;
+  width: 100%;
+}
+
+
+// Standard Grid 12 columns
+.col-1-12,
+.col-1-12-x {
+  width: $col-1;
+}
+
+.col-2-12,
+.col-2-12-x {
+  width: $col-2;
+}
+
+.col-3-12,
+.col-3-12-x {
+  width: $col-3;
+}
+
+.col-4-12,
+.col-4-12-x {
+  width: $col-4;
+}
+
+.col-5-12,
+.col-5-12-x {
+  width: $col-5;
+}
+
+.col-6-12,
+.col-6-12-x {
+  width: $col-6;
+}
+
+.col-7-12,
+.col-7-12-x {
+  width: $col-7;
+}
+
+.col-8-12,
+.col-8-12-x {
+  width: $col-8;
+}
+
+.col-9-12,
+.col-9-12-x {
+  width: $col-9;
+}
+
+.col-10-12,
+.col-10-12-x {
+  width: $col-10;
+}
+
+.col-11-12,
+.col-11-12-x {
+  width: $col-11;
+}
+
+.col-12-12,
+.col-12-12-x {
+  width: $col-12;
+}
+
+// Clear Margins
+.col-1-12.reset {
+  width: $col-1 + $margin;
+}
+
+.col-2-12.reset {
+  width: $col-2 + $margin;
+}
+
+.col-3-12.reset {
+  width: $col-3 + $margin;
+}
+
+.col-4-12.reset {
+  width: $col-4 + $margin;
+}
+
+.col-5-12.reset {
+  width: $col-5 + $margin;
+}
+
+.col-6-12.reset {
+  width: $col-6 + $margin;
+}
+
+//TODO fix
+.col-6-12.reset:last-of-type {
+  width: $col-6;
+}
+
+.col-7-12.reset {
+  width: $col-7 + $margin;
+}
+
+.col-8-12.reset {
+  width: $col-8 + $margin;
+}
+
+.col-9-12.reset {
+  width: $col-9 + $margin;
+}
+
+.col-10-12.reset {
+  width: $col-10 + $margin;
+}
+
+.col-11-12.reset {
+  width: $col-11 + $margin;
+}
+
+.col-12-12.reset {
+  width: $col-12 + $margin;
+}
+
+// TODO Add 24 Column Grid
+
+// Column offsets
+[class*='col-'].offset-1 {
+  margin-left: $col-1 + $margin;
+}
+
+[class*='col-'].offset-2 {
+  margin-left: $col-2 + $margin;
+}
+
+[class*='col-'].offset-3 {
+  margin-left: $col-3 + $margin;
+}
+
+[class*='col-'].offset-4 {
+  margin-left: $col-4 + $margin;
+}
+
+[class*='col-'].offset-5 {
+  margin-left: $col-5 + $margin;
+}
+
+[class*='col-'].offset-6 {
+  margin-left: $col-6 + $margin;
+}
+
+[class*='col-'].offset-7 {
+  margin-left: $col-7 + $margin;
+}
+
+[class*='col-'].offset-8 {
+  margin-left: $col-8 + $margin;
+}
+
+[class*='col-'].offset-9 {
+  margin-left: $col-9 + $margin;
+}
+
+[class*='col-'].offset-10 {
+  margin-left: $col-10 + $margin;
+}
+
+[class*='col-'].offset-11 {
+  margin-left: $col-11 + $margin;
+}
+
+// Less standard column options
+.col-1-5 {
+	width: percentage(1/5) - (($margin * 4) / 5);
+}
+
+.col-2-5 {
+	width: percentage(2/5) - ($margin * .6);
+}
+
+.col-3-5 {
+	width: percentage(3/5) - (($margin * .8) / 2);
+}
+
+.col-4-5 {
+	width: percentage(4/5) - (($margin * .6) / 3) ;
+}
+
+// Less standard reset
+.col-1-5.reset {
+	width: percentage(1/5);
+}
+
+.col-2-5.reset {
+	width: percentage(2/5);
+}
+
+.col-3-5.reset {
+	width: percentage(3/5);
+}
+
+.col-4-5.reset {
+	width: percentage(4/5);
+}
+
+// TODO add less standard offsets

@@ -1,0 +1,127 @@
+// Modal
+.modal-overlay {
+  @include modal-overlay();
+}
+
+.modal-overlay-responsive {
+  $color-start: rgba(33,33,33,1);
+  @include modal-overlay-responsive($color-start);
+}
+
+#modal-header {
+  padding: 10px;
+}
+
+#modal-title {
+  float: left;
+}
+
+#modal-close {
+  button {
+   background: transparent !important;
+   @extend .grey-text.text-darken-1;
+   padding: 0;
+  }
+
+  button:hover {
+    color: #fff !important;
+  }
+
+  float: right;
+}
+
+#modal-content {
+  margin: 15px 0;
+  padding: 10px;
+}
+
+#modal-footer {
+  padding: 10px;
+
+  button {
+    background: transparent !important;
+    @extend .grey-text.text-darken-1;
+    padding: 5px 10px;
+  }
+
+  button:hover {
+    color: #fff !important;
+  }
+}
+
+#modal-keep-open {
+  float: left;
+
+  button {
+    padding-left: 0;
+  }
+
+  i {
+    font-size: 1.5em;
+    margin: 0;
+    padding: 0;
+    vertical-align: middle;
+  }
+
+  span {
+    display: inline-flex;
+    vertical-align: middle;
+  }
+}
+
+#modal-cancel,
+#modal-save {
+  float: right
+}
+
+#modal-cancel {
+  padding-right: 20px;
+}
+
+#modal-save {
+  border: 1px solid gray;
+
+}
+
+.modal-tarp {
+  @extend .light-green.accent-2;
+  @extend .grey-text.text-darken-4;
+  display: none;
+  font-size: 1.2em;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+#modal-edit-password {
+  .modal-tarp {
+    padding: 90px 0;
+    text-align: center;
+  }
+}
+
+// Modal Forms
+#modal-user, #modal-edit-password {
+  label {
+    @extend .grey-text.text-darken-1;
+  }
+
+  div.row {
+    margin: 0 0 10px 0;
+  }
+
+  input,
+  select {
+    background: transparent !important;
+    color: #fff;
+    padding: 10px 0;
+  }
+
+  select option {
+    @extend .grey.darken-1;
+    border: 0;
+    outline: 0;
+  }
+}

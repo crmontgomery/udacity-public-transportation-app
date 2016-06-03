@@ -1,0 +1,134 @@
+// Reference: Breakpoints are from the Google Material Design Guidelines
+
+@media (max-width: 600px) {
+  
+  #btn-create-event {
+    span {
+      display: none;
+    }
+  }
+  
+  #modal-event {
+    height: 900px !important;
+    .col-6-12 {
+      border-left: 1px solid darken(#ccc, 60%) !important;
+      width: 100%;
+    }
+  }
+}
+
+// Tablet portrait
+@media (max-width: 720px) {
+  .container {
+    //background-color: green;
+  }
+  
+  [id*='event-row-'] {
+
+    [id*='event-wrapper-'] {
+      clear: both;
+      margin-right: 0;
+      margin-bottom: 18px;
+      width: 100%; //TODO find better solution
+    }
+  }
+  
+  #modal-event,
+  #modal-sign-up,
+  #modal-login {
+    bottom: auto;
+  }
+  
+  #modal-sign-up {
+    height: 800px;
+    .col-6-12 {
+      border-bottom: 0;
+      clear: right;
+      width: 100%;
+    }
+    
+    .col-6-12:last-child {
+      border-bottom: 1px solid darken(#ccc, 60%);
+      border-left: 1px solid darken(#ccc, 60%);
+    }
+  }
+  
+  #header,
+  #sub-menu {
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+  
+}
+
+// Tablet landscape
+@media (min-width: 721px) AND (max-width: 959px) {
+  .container {
+    //background-color: yellow;
+  }
+  
+  .temp-break-big {
+    display: none;
+  }
+  
+  [id*='event-row-'] {
+
+    [id*='event-wrapper-'] {
+      width: 49.23%; //TODO find better solution
+    }
+    
+  }
+  
+  #modal-event,
+  #modal-sign-up,
+  #modal-login {
+    bottom: auto;
+  }
+  
+  #header,
+  #sub-menu {
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+  
+  .grid-clear-right-sm {
+    clear: right;
+    margin-right: 0;
+  }
+  
+}
+
+//Desktop
+// Window large
+@media (min-width: 960px) {
+  .temp-break-small {
+    display: none;
+  }
+  
+  .grid-clear-right-lg {
+    clear: right;
+    margin-right: 0;
+  }
+}
+
+// Height media queries for modals
+// Sign Up Modal
+@media (max-height: 721px) {
+  #modal-event {
+    bottom: auto;
+  }
+}
+
+// Sign In Modal
+@media (max-height: 581px) {
+  #modal-sign-up {
+    bottom: auto;
+  }
+}
+
+// Event-modal
+@media (max-height: 351px) {
+  #modal-login {
+    bottom: auto;
+  }
+}

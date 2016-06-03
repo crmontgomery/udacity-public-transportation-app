@@ -29,14 +29,25 @@ class Transport
         return array_values($files);
     }
     
-    function renderList($array, $length )
+    function renderList($data)
     {
-        foreach($array as $key => $item){
-            echo $item . ' - ';
-            if(($key % $length) == 0 && $key != 0) {
-                print 'BREAK <br />';
-                
-            }
+        $length = count($data);
+        $length = $length - 1;
+        $i = 0;
+
+
+        foreach($data as $fkey => $array){
+          foreach($array as $key => $item){
+            print '<td>' . $item . '</td>
+            ';
+          }
+
+          if($length != $i){
+            print '</tr><tr>
+            ';
+          }
+          
+          $i++;
         }
     }
     

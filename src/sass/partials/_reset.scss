@@ -176,3 +176,31 @@ button:focus {
 [id$='-sample'] {
   display: none !important;
 }
+
+// Tables
+
+table {
+  border-collapse: collapse;
+  margin: 10px 0;
+  width: 100%;
+  
+  tr {
+    background-color: #ccc;
+    border-bottom: 2px solid #fff;
+    
+    td {
+      border-right: 2px solid #fff;
+      padding: 5px;
+    }
+    
+    td:last-child {
+      border: none;
+    }
+  }
+  
+  
+  
+  
+
+}
+

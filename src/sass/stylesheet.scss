@@ -2,18 +2,8 @@
 @import "components/all";
 
 // Partials
-@import "partials/reset";
-@import "partials/header";
-@import "partials/grid";
-@import "partials/forms";
-@import "partials/debug";
-@import "partials/modals";
-@import "partials/alert";
+@import "partials/all";
 
 // Modules
-@import "modules/error";
+@import "modules/all"; 
 
-// Vendors
-
-// Media Queries
-@import "partials/media-queries";

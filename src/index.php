@@ -1,5 +1,8 @@
-<!doctype html>
+<?php
+require_once('core/core.php');
+?> 
 
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -11,6 +14,6 @@
 
 <body>
   <h1>Transportation App</h1>
-  <script src="js/javascript.min.js"></script>
+  <script src="<?php echo (file_exists('js/javascript.min.js')) ? 'js/javascript.min.js' : 'js/javascript.js' ?>"></script>
 </body>
 </html>

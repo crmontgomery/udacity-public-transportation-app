@@ -1,5 +1,6 @@
 <?php
- require_once('core/core.php'); ?> 
+  require_once('core/core.php');
+?> 
 
 <!doctype html>
 <html lang="en">
@@ -21,22 +22,21 @@
   <main>
     <div class="row">
       <div class="container">
-          <div class="col-3-12" id="action">
-            <div class="row" id="time">
-              &nbsp;
-            </div>
-            <ul>
-              <li><button class=""><i class="material-icons">train</i> <span>Departing from</span></button></li>
-              <li>So. San Francisco Caltrain Station</li>
-              <li><button class=""><i class="material-icons">place</i> <span>Arriving at</span></button></li>  
-            </ul>
+
+        <?php
+          for($i=0; $i < count($dataList); $i++){
             
-          </div>
-          <div class="col-9-12" id="content">
-            <?php
- $transport->renderStations(); ?> 
-          </div>
-      </div>
+            print '<table>
+                    <tr><td>' . $dataList[$i] . '</td></tr>
+                    <tr>';
+            $transport->renderList($transport->getDataFromFile($dataList[$i]));
+            print '  </tr>
+                </table>
+                ';
+          }
+        ?> 
+
+
     </div>
   </main>
   <footer>

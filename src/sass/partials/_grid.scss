@@ -7,14 +7,12 @@
   display: inline-block;
   float: left;
   margin-right: $margin; //18px gutter
-  //padding: 10px;
 }
 
 [class*='col-'].reset {
   display: inline-block;
   float: left;
   margin-right: 0; //18px gutter
-  //padding: 10px;
 }
 
 // used to clear padding on col items ending in -x
@@ -38,7 +36,6 @@
   float: left;
   width: 100%;
 }
-
 
 // Standard Grid 12 columns
 .col-1-12,

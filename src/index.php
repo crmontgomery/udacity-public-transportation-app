@@ -16,26 +16,29 @@
 <body>
   <header>
     <div class="container">
-      <h1>Transportation App</h1>
+      <span id="title">Transportation App</span>
     </div>
   </header>
   <main>
-    <div class="container">
-      
-      <?php
-        for($i=0; $i < count($dataList); $i++){
-          
-          print '<table>
-                  <tr><td>' . $dataList[$i] . '</td></tr>
-                   <tr>';
-          $transport->renderList($transport->getDataFromFile($dataList[$i]));
-          print '  </tr>
-               </table>
-               ';
-        }
-        
-      ?> 
-        
+    <div class="row">
+      <div class="container">
+          <div class="col-3-12" id="action">
+            <div class="row" id="time">
+              &nbsp;
+            </div>
+            <ul>
+              <li><button class=""><i class="material-icons">train</i> <span>Departing from</span></button></li>
+              <li>So. San Francisco Caltrain Station</li>
+              <li><button class=""><i class="material-icons">place</i> <span>Arriving at</span></button></li>  
+            </ul>
+            
+          </div>
+          <div class="col-9-12" id="content">
+            <?php
+              $transport->renderStations();
+            ?> 
+          </div>
+      </div>
     </div>
   </main>
   <footer>

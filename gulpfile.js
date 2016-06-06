@@ -16,7 +16,7 @@ gulp.task('build', function(callback) {
   gulp.watch('src/sass/**/*.scss', ['build-styles']);
   gulp.watch('src/js/**/*.js', ['build-scripts']);
   gulp.watch('src/core/**/*.php', ['build-php']);
-  gulp.watch('src/index.php', ['build-php-index']);
+  gulp.watch('src/**/*.php', ['build-php-index']);
 });
 
 gulp.task('clean', function () {
@@ -42,7 +42,7 @@ gulp.task('build-php', () => gulp.src('src/core/**/*.php', { read: false })
   .pipe(gulp.dest('dist/core/'))
 );
 
-gulp.task('build-php-index', () => gulp.src('src/index.php', { read: false })
+gulp.task('build-php-index', () => gulp.src('src/**/*.php', { read: false })
   .pipe(phpMinify({ binary: 'C:\\Program Files \(x86\)\\Ampps\\php\\php.exe' }))
   .pipe(gulp.dest('dist/'))
 );

@@ -1,5 +1,4 @@
-<?php
- require_once('core/core.php'); ?> 
+
 
 <!doctype html>
 <html lang="en">
@@ -19,23 +18,27 @@
     </div>
   </header>
   <main>
+  <div class="row">
+   <div class="ccontainer" id="action">
+      <div class="row" id="time">
+        &nbsp;
+      </div>
+      <ul>
+        <li><button class=""><i class="material-icons">train</i> <span>Departing from</span></button></li>
+        <li>So. San Francisco Caltrain Station</li>
+        <li><button class=""><i class="material-icons">place</i> <span>Arriving at</span></button></li>  
+      </ul>
+  </div>
     <div class="row">
-      <div class="container">
+      <div class="container" id="content">
 
-        <?php
- for($i=0; $i < count($dataList); $i++){ print '<table>
-                    <tr><td>' . $dataList[$i] . '</td></tr>
-                    <tr>'; $transport->renderList($transport->getDataFromFile($dataList[$i])); print '  </tr>
-                </table>
-                '; } ?> 
-
-
+      </div>
     </div>
   </main>
   <footer>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script src="<?php echo (file_exists('js/javascript.min.js')) ? 'js/javascript.min.js' : 'js/javascript.js' ?>"></script>
-    <div class="container text-center">
+    <div class="container text-center" id="footer">
       Corey R. Montgomery
     </div>
   </footer>

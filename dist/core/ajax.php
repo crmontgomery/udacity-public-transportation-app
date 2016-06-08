@@ -1,1 +1,2 @@
 <?php
+ require_once('core.php'); $core = new Core(); if(isset($_POST['method']) && method_exists($core, $_POST['method'])) { $method = $_POST['method']; $filename = $_POST['filename']; switch($method) { case ajaxGetDataFromFile : echo $core->ajaxGetDataFromFile($filename); break; } } 

@@ -11,12 +11,12 @@ var gulp         = require('gulp'),
      
 gulp.task('build', function(callback) {
   runSequence('clean',
-              ['build-styles', 'build-scripts', 'build-php', 'data', 'build-php-index','imgmin'],
+              ['build-styles', 'build-scripts', 'build-php', 'data', 'build-html-index','imgmin'],
               callback);
   gulp.watch('src/sass/**/*.scss', ['build-styles']);
   gulp.watch('src/js/**/*.js', ['build-scripts']);
   gulp.watch('src/core/**/*.php', ['build-php']);
-  gulp.watch('src/**/*.php', ['build-php-index']);
+  gulp.watch('src/**/*.html', ['build-html-index']);
 });
 
 gulp.task('clean', function () {
@@ -28,8 +28,8 @@ gulp.task('clean', function () {
 });
 
 gulp.task('data', function() {
-  gulp.src('src/data/**/*.txt')
-  .pipe(gulp.dest('dist/data/'));
+  gulp.src('src/data/txt/**/*.txt')
+  .pipe(gulp.dest('dist/data/txt'));
 });
 
 gulp.task('imgmin', () => gulp.src('src/img/*')
@@ -40,6 +40,11 @@ gulp.task('imgmin', () => gulp.src('src/img/*')
 gulp.task('build-php', () => gulp.src('src/core/**/*.php', { read: false })
   .pipe(phpMinify({ binary: 'C:\\Program Files \(x86\)\\Ampps\\php\\php.exe' }))
   .pipe(gulp.dest('dist/core/'))
+);
+
+gulp.task('build-html-index', () => gulp.src('src/**/*.html', { read: false })
+  .pipe(phpMinify({ binary: 'C:\\Program Files \(x86\)\\Ampps\\php\\php.exe' }))
+  .pipe(gulp.dest('dist/'))
 );
 
 gulp.task('build-php-index', () => gulp.src('src/**/*.php', { read: false })

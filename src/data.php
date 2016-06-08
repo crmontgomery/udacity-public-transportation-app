@@ -22,18 +22,27 @@
   <main>
     <div class="row">
       <div class="container">
+        <?php 
+        echo 'Stuff';
+        $transport->debug($transport->getDataFromFile($dataList[2]));
+
+        ?>
+      </div>
+    </div>
+    <div class="row">
+      <div class="container">
 
         <?php
-          for($i=0; $i < count($dataList); $i++){
+          // for($i=0; $i < count($dataList); $i++){
             
-            print '<table>
-                    <tr><td>' . $dataList[$i] . '</td></tr>
-                    <tr>';
-            $transport->renderList($transport->getDataFromFile($dataList[$i]));
-            print '  </tr>
-                </table>
-                ';
-          }
+          //   print '<table>
+          //           <tr><td>' . $dataList[$i] . '</td></tr>
+          //           <tr>';
+          //   $transport->renderList($transport->getDataFromFile($dataList[$i]));
+          //   print '  </tr>
+          //       </table>
+          //       ';
+          // }
         ?> 
 
 

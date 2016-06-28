@@ -3,20 +3,9 @@
   margin-bottom: 18px;
   padding: 18px;
   
-  ul {
-    margin: 0;
-    padding: 0;
-  }
-  
-  li {
-    list-style: none;
-    margin: 0;
-    padding: 0; 
-  }
-   
   button {
-    background-color: transparent !important;
-    color: #fff;
+    background-color: red !important;
+    color: #ccc;
     font-size: 1.5em;
     
     i {
@@ -29,12 +18,24 @@
       display: inline-flex;
       vertical-align: middle;
     }
+
+    
+  }
+
+  button.set {
+    color: #fff !important;
   }
   
   #time {
     color: #fff;
     font-size: 1.8em;
     text-align: center;
+  }
+
+  #depart-step-text,
+  #arrive-step-text,
+  #date-step-text {
+    color: #ccc;
   }
 }
 

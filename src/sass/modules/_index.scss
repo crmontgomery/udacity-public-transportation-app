@@ -4,9 +4,10 @@
   padding: 18px;
   
   button {
-    background-color: red !important;
+    background-color: transparent !important;
     color: #ccc;
     font-size: 1.5em;
+    padding: 10px 0;
     
     i {
       margin: 0;
@@ -18,8 +19,6 @@
       display: inline-flex;
       vertical-align: middle;
     }
-
-    
   }
 
   button.set {

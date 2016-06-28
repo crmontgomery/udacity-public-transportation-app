@@ -1913,10 +1913,6 @@ header {
   header #title {
     font-size: 1.2em; }
 
-@media (max-width: 600px) {
-  #action .col-4-12 {
-    width: 100%; } }
-
 .modal-overlay {
   background: #4d4d4a;
   display: none;
@@ -2170,14 +2166,22 @@ table {
   width: 100%;
   z-index: 1000; }
 
+@media (max-width: 600px) {
+  #action {
+    margin-bottom: 100px;
+    padding: 100px; }
+    #action .col-4-12 {
+      width: 100%; } }
+
 #action {
   background-color: #263238;
   margin-bottom: 18px;
   padding: 18px; }
   #action button {
-    background-color: red !important;
+    background-color: transparent !important;
     color: #ccc;
-    font-size: 1.5em; }
+    font-size: 1.5em;
+    padding: 10px 0; }
     #action button i {
       margin: 0;
       padding: 0;

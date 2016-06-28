@@ -1,7 +1,7 @@
 $(document).ready(function(){
   //isOnline() ? console.log('Online') : console.log('Offline');
 
-  var buildJSONFiles = (function(){
+  var build = (function(){
 
     function createJsonFromTxt()
     {
@@ -13,14 +13,21 @@ $(document).ready(function(){
       getData('getStations');
     }
 
+    function displayStations(data)
+    {
+      console.log(data);
+    }
+
     return {
       createJson: createJsonFromTxt,
-      getStations: getStations
+      getStations: getStations,
+      displayStations: displayStations
     };
   })();
 
-  //buildJSONFiles.createJson();
-  console.log(buildJSONFiles.getStations());
+    build.createJson();
+
+  //build.getStations();
 
   /**
    * Queries the server for specific data
@@ -28,20 +35,30 @@ $(document).ready(function(){
    * @param {String} variable
    * @return {Object} JSON
    */
-
   function getData(action, variable)
   {
     var url = 'core/ajax.php',
       file = variable || null;
 
+      var theData = null;
+
     $.post(url, {method: action, filename: file}, function(data){
     }).success(function(data){
-      console.log(data);
-      return data;
+
+      switch(action) {
+        case 'getStations':
+             build.displayStations(data);
+             break;
+        case 'buildJson':
+             build.displayStations(data);
+             break;
+        default:
+             console.log('default');
+      }
+      
     }).fail(function(e){
       console.log(e);
-      return e;
-    });
+    }, 'json');
   }
 
   function isOnline()

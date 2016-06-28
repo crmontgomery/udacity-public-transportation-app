@@ -1,7 +1,5 @@
 <?php
 
-//require_once('core.php');
-
 class Core
 {
 
@@ -17,6 +15,20 @@ class Core
         // get file list
         // convert file into json
         //   create new json file
+    }
+
+    function TEMP_build()
+    {
+        $files = $this->getDataList();
+        
+        try {
+            foreach($files as $file) {
+                $json = $this->ajaxGetDataFromFile($file);
+                $this->createJsonFile($file, $json);
+            }
+        } catch(Exception $e) {
+            echo $e;
+        }
     }
 
     private function parseArrayForJson($keys, $data)
@@ -38,9 +50,9 @@ class Core
         return $json;
     }
 
-    private function createJsonFile($filename, $data)
+    function createJsonFile($filename, $data)
     {
-        $folder = '../data/json';
+        $folder = $_SERVER['DOCUMENT_ROOT'] . '/data/json';
 
         // check if JSON folder exists
         if (!file_exists($folder)) {
@@ -48,15 +60,23 @@ class Core
         }
 
         // check if file exists
-        if(!$this->jsonExists($filename)){
+        if(!$this->pain($filename)){
             // if file does not exist, write the json to it
-            $file = fopen($folder . '/' .  $filename, 'w');
-            fwrite($file, json_encode($data));
-            fclose($file);
+            try {
+                $path = $folder . '/' .  $filename;
+                $file = fopen($path, 'a+');
+                fwrite($file, $data);
+                fclose($file);
+                chmod($path, 0777);
+                echo 'WTF';
+            } catch(Exception $e){
+                echo 'Error ' . $e;
+            }
+            
         }
     }
 
-    function jsonExist($filename)
+    function pain($filename)
     {
         return file_exists($filename) ? true : false;
     }
@@ -114,12 +134,12 @@ class Core
 
     function ajaxGetStations()
     {
-        return json_encode($this->getStations());
+        return json_encode($this->getStations(), JSON_FORCE_OBJECT);
     }
 
     function getDataList()
     {
-        $files = scandir('./data/');
+        $files = scandir('../data/txt');
         
         foreach($files as $key => $file){
             if($file == '.' || $file == '..'){
@@ -134,63 +154,65 @@ class Core
     {
         $stations = $this->getDataFromFile('stops.txt');
         $stationList = [];
-        foreach($stations as $station){
-            $stationList[$station[0]] = $station[2];
+        foreach($stations[0] as $station){
+            $stationTemp = array();
+            $stationTemp['id'] = $station[0];
+            $stationTemp['name'] = $station[2];
+            $stationList[] = $stationTemp;
         }
         
-        unset($stationList['stop_id']);
-        
-        return array_unique($stationList);
+        //return array_unique($stationList);
+        return $stationList;
     }
     
-    function renderList($data)
-    {
-        $length = count($data);
-        $length = $length - 1;
-        $i = 0;
+    // function renderList($data)
+    // {
+    //     $length = count($data);
+    //     $length = $length - 1;
+    //     $i = 0;
 
-        foreach($data as $fkey => $array){
-          foreach($array as $key => $item){
-            print '<td>' . $item . '</td>
-            ';
-          }
+    //     foreach($data as $fkey => $array){
+    //       foreach($array as $key => $item){
+    //         print '<td>' . $item . '</td>
+    //         ';
+    //       }
 
-          if($length != $i){
-            print '</tr><tr>
-            ';
-          }
+    //       if($length != $i){
+    //         print '</tr><tr>
+    //         ';
+    //       }
           
-          $i++;
-        }
-    }
+    //       $i++;
+    //     }
+    // }
     
-    function renderStations()
-    {
-        $stations = $this->getStations();
-        $breakOn = 3;
-        $i = 0;
+    // function renderStations()
+    // {
+    //     $stations = $this->getStations();
+    //     $breakOn = 3;
+    //     $i = 0;
         
-        foreach($stations as $key => $station){
-            $i++;
-            $break = ($i % $breakOn == 0 && $i != 0) ? ' break' : '' ;
-            print '
-                <div class="col-4-12 station' . $break . '" id="' . $key . '">
+    //     foreach($stations as $key => $station){
+    //         $i++;
+    //         $break = ($i % $breakOn == 0 && $i != 0) ? ' break' : '' ;
+    //         print '
+    //             <div class="col-4-12 station' . $break . '" id="' . $key . '">
                   
-                    <i class="material-icons">train</i>
-                    <span>'
-                    . $station .
-                    '</span>
-                  </ul>   
-                 </div>
+    //                 <i class="material-icons">train</i>
+    //                 <span>'
+    //                 . $station .
+    //                 '</span>
+    //               </ul>   
+    //              </div>
             
-            ';
+    //         ';
             
-            if($break){
-                print '<div class="shame-break">&nbsp;</div>';
-            }
+    //         if($break){
+    //             print '<div class="shame-break">&nbsp;</div>';
+    //         }
             
-        }
-    }
+    //     }
+    // }
     
     function debug($array)
     {
@@ -216,7 +238,7 @@ if(isset($_POST['method']) && method_exists($core, $_POST['method'])) {
             echo $core->getFileList();
             break;
         case buildJson :
-            echo $core->buildJson();
+            echo $core->TEMP_build();
             break;
         case getStations :
             echo $core->ajaxGetStations();

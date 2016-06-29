@@ -59,8 +59,10 @@ class Core
             mkdir($folder, 0777, true);
         }
 
+        $filename = substr($filename, 0, strpos($filename, '.'));
+        $filename = $filename . '.json';
         // check if file exists
-        if(!$this->pain($filename)){
+        if(!file_exists($folder . '/' . $filename)){
             // if file does not exist, write the json to it
             try {
                 $path = $folder . '/' .  $filename;
@@ -68,11 +70,9 @@ class Core
                 fwrite($file, $data);
                 fclose($file);
                 chmod($path, 0777);
-                echo 'WTF';
             } catch(Exception $e){
                 echo 'Error ' . $e;
             }
-            
         }
     }
 

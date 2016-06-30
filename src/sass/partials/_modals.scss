@@ -19,7 +19,7 @@
 #modal-close {
   button {
    background: transparent !important;
-   @extend .grey-text.text-darken-1;
+   color: #757575; // .grey-text.text-darken-1
    padding: 0;
   }
 
@@ -40,7 +40,7 @@
 
   button {
     background: transparent !important;
-    @extend .grey-text.text-darken-1;
+    color: #757575; // .grey-text.text-darken-1;
     padding: 5px 10px;
   }
 
@@ -84,8 +84,8 @@
 }
 
 .modal-tarp {
-  @extend .light-green.accent-2;
-  @extend .grey-text.text-darken-4;
+  background-color: #b2ff59; // .light-green.accent-2;
+  color: #212121;// .grey-text.text-darken-4;
   display: none;
   font-size: 1.2em;
   height: 100%;
@@ -105,7 +105,7 @@
 // Modal Forms
 #modal-user, #modal-edit-password {
   label {
-    @extend .grey-text.text-darken-1;
+    color: #757575;// .grey-text.text-darken-1;
   }
 
   div.row {
@@ -120,7 +120,7 @@
   }
 
   select option {
-    @extend .grey.darken-1;
+    background-color: #757575;// .grey.darken-1
     border: 0;
     outline: 0;
   }

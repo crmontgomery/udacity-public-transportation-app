@@ -5,19 +5,10 @@ class Core
 
     function __construct()
     {
-        $this->buildJson();
+        //empty
     }
 
     function buildJson()
-    {
-        // check that data is there
-        // check that txt files jsonExist
-        // get file list
-        // convert file into json
-        //   create new json file
-    }
-
-    function TEMP_build()
     {
         $files = $this->getDataList();
         
@@ -52,8 +43,9 @@ class Core
 
     function createJsonFile($filename, $data)
     {
-        $folder = $_SERVER['DOCUMENT_ROOT'] . '/data/json';
-
+        // $folder = $_SERVER['DOCUMENT_ROOT'] . '/data/json';
+        $folder = '../data/json';
+        echo $folder;
         // check if JSON folder exists
         if (!file_exists($folder)) {
             mkdir($folder, 0777, true);
@@ -231,16 +223,16 @@ if(isset($_POST['method']) && method_exists($core, $_POST['method'])) {
     $filename = $_POST['filename'];
     // White list for accessing php functions through ajax
     switch($method) {
-        case getDataFromFile :
+        case 'getDataFromFile':
             echo $core->ajaxGetDataFromFile($filename);
             break;
-        case getFileList :
+        case 'getFileList':
             echo $core->getFileList();
             break;
-        case buildJson :
-            echo $core->TEMP_build();
+        case 'buildJson':
+            echo $core->buildJson();
             break;
-        case getStations :
+        case 'getStations':
             echo $core->ajaxGetStations();
             break;
     }

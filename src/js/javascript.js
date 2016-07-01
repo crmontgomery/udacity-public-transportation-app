@@ -44,15 +44,13 @@ $(document).ready(function(){
       ul.appendChild(li);
     }
 
-
     return {
       stations: viewStations
     };
   })();
-
-    view.stations();
     build.createJson();
-
+    view.stations();
+  
   //build.getStations();
 
   /**

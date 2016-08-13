@@ -4,7 +4,7 @@ html {
 }
 
 body {
-  background-color: #f5f5f5;// .grey.lighten-4;
+  background-color: gainsboro;
   color: black;
   font-family: 'Open Sans', sans-serif;
   font-size: 16px;
@@ -118,9 +118,9 @@ a:link, a:visited {
   float: right;
 }
 
-// BORDERS
 $border-color: #ccc;
 
+// BORDERS
 .border-all {
   border: 1px solid $border-color;
 }
@@ -178,29 +178,6 @@ button:focus {
 }
 
 // Tables
-
 table {
-  border-collapse: collapse;
-  margin: 10px 0;
   width: 100%;
-  
-  tr {
-    background-color: #ccc;
-    border-bottom: 2px solid #fff;
-    
-    td {
-      border-right: 2px solid #fff;
-      padding: 5px;
-    }
-    
-    td:last-child {
-      border: none;
-    }
-  }
-  
-  
-  
-  
-
 }
-

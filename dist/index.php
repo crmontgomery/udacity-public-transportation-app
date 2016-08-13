@@ -7,12 +7,12 @@
   <meta name="description" content="A publice transportation app.">
   <meta name="author" content="Corey R. Montgomery">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="css/stylesheet.min.css" rel="stylesheet" >
+  <link href="css/stylesheet.css" rel="stylesheet" >
 </head>
 <body>
   <header>
     <div class="container">
-      <span id="title">Transportation App</span>
+      <span id="title">Transportation App: Test 1</span>
     </div>
   </header>
   <main>

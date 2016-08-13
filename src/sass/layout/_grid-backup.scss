@@ -4,13 +4,13 @@
 }
 
 [class*='col-'] {
-  display: inline-block;
+  //display: inline-block;
   float: left;
-  margin-right: $margin; //18px gutter
+  margin-right: $fixed-margin; //18px gutter
 }
 
 [class*='col-'].reset {
-  display: inline-block;
+  //display: inline-block;
   float: left;
   margin-right: 0; //18px gutter
 }
@@ -36,6 +36,7 @@
   float: left;
   width: 100%;
 }
+
 
 // Standard Grid 12 columns
 .col-1-12,
@@ -103,27 +104,46 @@
   width: $col-1 + $margin;
 }
 
+.col-1-12.reset:last-of-type {
+  width: $col-1;
+}
+
 .col-2-12.reset {
   width: $col-2 + $margin;
+}
+
+.col-2-12.reset:last-of-type {
+  width: $col-2;
 }
 
 .col-3-12.reset {
   width: $col-3 + $margin;
 }
 
+.col-3-12.reset:last-of-type {
+  width: $col-3;
+}
+
 .col-4-12.reset {
   width: $col-4 + $margin;
+}
+
+.col-4-12.reset:last-of-type {
+  width: $col-4;
 }
 
 .col-5-12.reset {
   width: $col-5 + $margin;
 }
 
+.col-5-12.reset:last-of-type {
+  width: $col-5;
+}
+
 .col-6-12.reset {
   width: $col-6 + $margin;
 }
 
-//TODO fix
 .col-6-12.reset:last-of-type {
   width: $col-6;
 }
@@ -132,20 +152,40 @@
   width: $col-7 + $margin;
 }
 
+.col-7-12.reset:last-of-type {
+  width: $col-7;
+}
+
 .col-8-12.reset {
   width: $col-8 + $margin;
+}
+
+.col-8-12.reset:last-of-type {
+  width: $col-8;
 }
 
 .col-9-12.reset {
   width: $col-9 + $margin;
 }
 
+.col-9-12.reset:last-of-type {
+  width: $col-9;
+}
+
 .col-10-12.reset {
   width: $col-10 + $margin;
 }
 
+.col-10-12.reset:last-of-type {
+  width: $col-10;
+}
+
 .col-11-12.reset {
   width: $col-11 + $margin;
+}
+
+.col-11-12.reset:last-of-type {
+  width: $col-11;
 }
 
 .col-12-12.reset {

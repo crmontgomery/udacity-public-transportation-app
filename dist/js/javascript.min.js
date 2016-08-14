@@ -48,8 +48,9 @@ $(document).ready(function(){
       stations: viewStations
     };
   })();
-    build.createJson();
-    view.stations();
+  
+  // build.createJson();
+  // view.stations();
   
   //build.getStations();
 

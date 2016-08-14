@@ -16,12 +16,12 @@
     </div>
   </header>
   <main>
-    <div class="container red">
-        <div class="row green">
-            <div class="col-3-12 blue"><div class="module">One</div></div>
-            <div class="col-3-12 yellow"><div class="module">Two</div></div>
-            <div class="col-3-12 purple"><div class="module">Three</div></div>
-            <div class="col-3-12 yellow"><div class="module">Four</div></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-3-12"><div class="module">One</div></div>
+            <div class="col-3-12"><div class="module">Two</div></div>
+            <div class="col-3-12"><div class="module">Three</div></div>
+            <div class="col-3-12"><div class="module">Four</div></div>
         </div>
     </div>
   </main>

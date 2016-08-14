@@ -349,22 +349,23 @@ label {
 .col-4-5 {
   width: 80%; }
 
-#header {
+header {
   background-color: #212121;
+  color: gainsboro;
   padding: 20px 0; }
-  #header button {
+  header button {
     background-color: transparent !important;
     color: #bdbdbd;
     font-size: 1em;
     padding: 0; }
-  #header a:link,
-  #header a:visited {
+  header a:link,
+  header a:visited {
     color: #bdbdbd;
     transition: all .3s ease; }
-  #header a:hover,
-  #header a:active,
-  #header button:hover,
-  #header button:active {
+  header a:hover,
+  header a:active,
+  header button:hover,
+  header button:active {
     color: #f5f5f5 !important; }
 
 #main-menu li {
@@ -498,241 +499,3 @@ label {
   top: 0;
   width: 100%;
   z-index: 1000; }
-
-[id*='event-wrapper-'] {
-  background-color: #fff;
-  border-bottom: 3px solid #8A376A;
-  margin-bottom: 18px;
-  padding: 10px;
-  transition: all .5s; }
-
-[id*='event-wrapper-']:hover {
-  border-bottom: 3px solid #E74C6E; }
-  [id*='event-wrapper-']:hover .event-head {
-    background-color: #E74C6E; }
-
-.event-name {
-  font-size: 1.3em;
-  padding: 0 0 10px 0; }
-
-.event-head,
-.event-times,
-.event-guests {
-  margin: 0 0 18px 0; }
-
-.event-meta {
-  color: white;
-  text-align: center; }
-  .event-meta div:first-child {
-    width: 100%; }
-
-.event-type-host {
-  border-bottom: 1px dashed #999999;
-  margin: 0 0 9px 0;
-  padding: 0 0 9px 0; }
-
-.event-location {
-  width: 100%; }
-
-.event-location {
-  font-size: 1em;
-  padding: 0 0 5px 0; }
-  .event-location a:link,
-  .event-location a:visited {
-    color: #fff !important;
-    transition: all .5s; }
-  .event-location a:hover,
-  .event-location a:active {
-    color: #E2FF40 !important; }
-
-.event-location:hover a:link,
-.event-location:hover a:visited {
-  color: #E2FF40; }
-
-.event-location:hover i {
-  color: #E2FF40; }
-
-.event-head {
-  background-color: #8A376A;
-  color: #fff;
-  padding: 18px;
-  transition: all .5s; }
-
-.event-head:hover {
-  background-color: #E74C6E; }
-
-.event-actions ul li {
-  margin-right: 18px; }
-
-.event-actions ul li:last-child {
-  margin-right: 0; }
-
-.event-label {
-  font-size: .8em;
-  letter-spacing: 1px;
-  text-transform: uppercase; }
-
-.event-times,
-.event-details,
-.event-guests {
-  border-bottom: 1px dashed #ccc;
-  margin: 0 0 10px 0;
-  padding: 0 0 10px 0; }
-
-#modal-event {
-  background: #212121;
-  color: #fff;
-  display: none;
-  height: 720px;
-  left: 0;
-  margin: auto;
-  max-width: 650px;
-  padding: 20px;
-  position: absolute;
-  /*it can be fixed too*/
-  right: 0;
-  top: 0;
-  transform: opacity .4s ease;
-  overflow: hidden;
-  z-index: 2;
-  bottom: 0; }
-
-.event-overlay {
-  background-color: #8a376a !important; }
-
-#modal-event input,
-#modal-sign-up input,
-#modal-login input {
-  background-color: transparent !important;
-  color: #fff;
-  font-size: 1.2em;
-  padding: 10px 0; }
-
-#modal-event #label-validation span,
-#modal-sign-up #label-validation span,
-#modal-login #label-validation span {
-  color: gray;
-  margin-right: 5px;
-  text-transform: none;
-  transition: all .5s; }
-
-#modal-event #label-validation span.fail,
-#modal-sign-up #label-validation span.fail,
-#modal-login #label-validation span.fail {
-  color: #ff5252; }
-
-#modal-event #label-validation span.pass,
-#modal-sign-up #label-validation span.pass,
-#modal-login #label-validation span.pass {
-  color: #76ff03; }
-
-#modal-event #label-validation span:last-child,
-#modal-sign-up #label-validation span:last-child,
-#modal-login #label-validation span:last-child {
-  margin-right: 0; }
-
-#modal-event #optional-information,
-#modal-sign-up #optional-information,
-#modal-login #optional-information {
-  margin-top: 18px; }
-  #modal-event #optional-information .col-6-12,
-  #modal-sign-up #optional-information .col-6-12,
-  #modal-login #optional-information .col-6-12 {
-    border: solid #333333;
-    border-width: 1px 1px 1px 1px; }
-
-#modal-event .col-6-12,
-#modal-event .col-12-12,
-#modal-sign-up .col-6-12,
-#modal-sign-up .col-12-12,
-#modal-login .col-6-12,
-#modal-login .col-12-12 {
-  border: solid #333333;
-  border-width: 1px 1px 0 1px;
-  padding: 10px; }
-
-#modal-event .col-6-12:last-child,
-#modal-sign-up .col-6-12:last-child,
-#modal-login .col-6-12:last-child {
-  border-left: 0; }
-
-#modal-event .col-12-12.border-bottom,
-#modal-sign-up .col-12-12.border-bottom,
-#modal-login .col-12-12.border-bottom {
-  border: solid #333333;
-  border-width: 1px 1px 1px 1px; }
-
-#modal-event .hide-label,
-#modal-sign-up .hide-label,
-#modal-login .hide-label {
-  transition: all .5s ease; }
-
-#modal-event textarea,
-#modal-sign-up textarea,
-#modal-login textarea {
-  background-color: transparent !important;
-  clear: both;
-  color: #fff;
-  font-size: 1.2em;
-  font-family: 'Open Sans', sans-serif;
-  resize: none;
-  width: 100%; }
-
-#modal-event input[type="datetime"],
-#modal-sign-up input[type="datetime"],
-#modal-login input[type="datetime"] {
-  font-size: 1.2em;
-  font-family: 'Open Sans', sans-serif; }
-
-#modal-sign-up {
-  background: #212121;
-  color: #fff;
-  display: none;
-  height: 580px;
-  left: 0;
-  margin: auto;
-  max-width: 500px;
-  padding: 20px;
-  position: absolute;
-  /*it can be fixed too*/
-  right: 0;
-  top: 0;
-  transform: opacity .4s ease;
-  overflow: hidden;
-  z-index: 2;
-  bottom: 0; }
-
-#modal-login {
-  background: #212121;
-  color: #fff;
-  display: none;
-  height: 350px;
-  left: 0;
-  margin: auto;
-  max-width: 500px;
-  padding: 20px;
-  position: absolute;
-  /*it can be fixed too*/
-  right: 0;
-  top: 0;
-  transform: opacity .4s ease;
-  overflow: hidden;
-  z-index: 2;
-  bottom: 0; }
-
-#sample-event-wrapper {
-  display: none; }
-
-#empty-events {
-  margin-top: 50px; }
-
-#error-message {
-  color: #ff3d00; }
-  #error-message span {
-    display: none; }
-
-.temp-break-big,
-.temp-break-small {
-  float: left;
-  height: 1px;
-  width: 100%; }

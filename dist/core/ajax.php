@@ -5,7 +5,14 @@ class Core
 
     function __construct()
     {
-        //empty
+        try {
+            $this->db = new Database('mysql', 'localhost', 'transport_app', 'root', 'mysql');
+		} catch(Exception $e) {
+			echo $e;
+			exit;
+		}
+
+		date_default_timezone_set('America/Los_Angeles');
     }
 
     function buildJson()

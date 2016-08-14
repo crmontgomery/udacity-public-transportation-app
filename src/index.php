@@ -16,16 +16,64 @@ include('core/core.php')
 <body>
   <header>
     <div class="container">
-      <span id="title">Transportation App: Test 1</span>
+      <span id="title">Transportation App</span>
     </div>
   </header>
   <main>
-    <div class="container">
+    <div class="row-x" id="hero">
+      <div class="container">
+        <div class="row">
+          <div class="col-4-12">
+            <div class="module">
+              <div><small>Step 1</small></div>
+              <button>Departing From:</button>
+            </div>
+          </div> <!-- /step 1 -->
+          <div class="col-4-12">
+            <div class="module">
+              <div><small>Step 2</small></div>
+              <button>Arriving At</button>
+            </div>
+          </div><!-- /step 1 -->
+          <div class="col-4-12">
+            <div class="module">
+              <div><small>Step 3</small></div>
+              <div class="row">
+                <div class="col-6-12">
+                  <button>Weekday</button>
+                </div>
+                <div class="col-6-12">
+                  <button>Weekend</button>
+                </div>
+              </div>
+            </div>
+          </div><!-- /step 1 -->
+        </div><!-- /row -->
+      </div> <!-- /container -->
+    </div> <!-- /row-x hero -->
+    <div class="container" id="primary-content">
       <div class="row">
-        <div class="col-4-12"><div class="module">Step 1</div></div>
-        <div class="col-4-12"><div class="module">Step 2</div></div>
-        <div class="col-4-12"><div class="module">Step 3</div></div>
-      </div>
+          <div class="col-3-12">
+            <div class="module">
+              Stop 1
+            </div>
+          </div> <!-- /stop 1 -->
+          <div class="col-3-12">
+            <div class="module">
+              Stop 2
+            </div>
+          </div><!-- /stop 2 -->
+          <div class="col-3-12">
+            <div class="module">
+              Stop 3
+            </div>
+          </div><!-- /stop 3 -->
+          <div class="col-3-12">
+            <div class="module">
+              Stop 4
+            </div>
+          </div><!-- /stop 4 -->
+        </div><!-- /row -->
     </div>
   </main>
   <footer>

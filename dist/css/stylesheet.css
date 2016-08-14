@@ -499,3 +499,16 @@ header {
   top: 0;
   width: 100%;
   z-index: 1000; }
+
+main #hero {
+  background-color: #bb4430;
+  padding: 18px; }
+  main #hero .row {
+    margin-bottom: 0; }
+  main #hero .module {
+    background-color: #923526 !important;
+    color: gainsboro;
+    text-transform: uppercase; }
+    main #hero .module > div:first-child {
+      margin: 0 0 18px 0;
+      text-align: center; }

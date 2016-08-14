@@ -5,6 +5,7 @@ class Core
     function __construct()
     {
         require 'database.php';
+        date_default_timezone_set('America/Los_Angeles');
 
         try {
             $this->db = new Database('mysql', 'localhost', 'transport_app', 'root', 'mysql');
@@ -13,25 +14,50 @@ class Core
 			exit;
 		}
 
-		date_default_timezone_set('America/Los_Angeles');
-
-        $this->loadDatabase();
+        if(empty($this->isDatabaseLoaded()))
+        {
+            $this->loadDatabase();
+        }
     }
 
     function loadDatabase()
     {
-        print '<pre>';  
-        // $stuff = $this->getDataFromFile('shapes.txt');
-        // $keys = $stuff[0][0];
-        // $data = $stuff[1];
-        // $json = $this->parseArrayForJson($keys, $data);
-        // $this->addTransportDataToDb('shapes', $json);
+        try {
+            // Get file list
+            $fileList = $this->getDataList();
 
-        $fileList = $this->getDataList();
+            // Loop through the filelist
+            foreach($fileList as $file)
+            {
+                $this->prepFileForDatabase($file);
+            } 
 
-        print_r($this->getDataList());
+            $this->isDatabaseLoaded(true);
+        } catch(Exception $e) {
+            echo $e;
+        }
+    }
+
+    function prepFileForDatabase($file, $upload = true)
+    {
+        try {
+            // Get the data from the file
+            $fileData = $this->getDataFromFile($file);
+            // Get the file keys
+            $keys = $fileData[0][0];
+            // Get the file data
+            $data = $fileData[1];
+            // Use the file keys to create a json array
+            $json = $this->parseArrayForJson($keys, $data);
+            // Use the json array to load the database
+            if($upload){
+                $this->addTransportDataToDb($file, $json);
+            }
+            return $json;
+        } catch(Exception $e) {
+            return $e;
+        }
         
-        print '</pre>';      
     }
 
     function addTransportDataToDb($tableName, $json)
@@ -44,10 +70,10 @@ class Core
                 $data = array();
                 foreach($record as $key => $item)
                 {
-                    $data[$key] = $item ;
+                    $data[$key] = trim($item,'"');;
                 }
 
-                $this->db->insert($table, $data);
+                echo $this->db->insert($table, $data);
             }
 
         } catch(Exception $e) {
@@ -56,21 +82,23 @@ class Core
         
     }
 
-
-    // OLD
-
-    function buildJson()
+    function isDatabaseLoaded($loaded = false)
     {
-        $files = $this->getDataList();
-        
-        try {
-            foreach($files as $file) {
-                $json = $this->ajaxGetDataFromFile($file);
-                $this->createJsonFile($file, $json);
-            }
-        } catch(Exception $e) {
-            echo $e;
+        if($loaded)
+        {
+            $table = 'settings';
+            $data = array(
+                    'data_loaded'     => 1
+                    );
+
+            $this->db->insert($table, $data);
+        } else {
+            $sql = 'SELECT * 
+                    FROM settings';
+
+            return $this->db->select($sql);
         }
+        
     }
 
     private function parseArrayForJson($keys, $data)
@@ -93,6 +121,67 @@ class Core
 
         return $json;
     }
+
+    function getDataFromFile($filename)
+    {
+        $array = array();
+        // $txtFile  = "../data/txt/" . $filename;
+        $txtFile  = "data/txt/" . $filename; // For NATIVE PHP
+        $contents = file($txtFile, FILE_IGNORE_NEW_LINES);
+        $firstRow = true;
+        $fileKeys = array();
+
+        foreach($contents as $item)
+        {
+            if($firstRow){
+                $fileKeys[] = explode(',', $item);
+                $firstRow = false;
+            } else {
+                $array[] = explode(',', $item);
+            }
+        }
+        
+        return array($fileKeys, $array);
+    }
+
+    function getDataList()
+    {
+        //$files = scandir('../data/txt');
+        $files = scandir('data/txt');
+        
+        foreach($files as $key => $file){
+            if($file == '.' || $file == '..'){
+                unset($files[$key]);
+            }    
+        }
+        
+        return array_values($files);
+    }
+
+    // ajax 
+    function ajax_getStations()
+    {
+        
+    }
+
+
+    // OLD
+
+    function buildJson()
+    {
+        $files = $this->getDataList();
+        
+        try {
+            foreach($files as $file) {
+                $json = $this->ajaxGetDataFromFile($file);
+                $this->createJsonFile($file, $json);
+            }
+        } catch(Exception $e) {
+            echo $e;
+        }
+    }
+
+    
 
     function createJsonFile($filename, $data)
     {
@@ -128,27 +217,7 @@ class Core
         return file_exists($filename) ? true : false;
     }
 
-    function getDataFromFile($filename)
-    {
-        $array = array();
-        // $txtFile  = "../data/txt/" . $filename;
-        $txtFile  = "data/txt/" . $filename; // For NATIVE PHP
-        $contents = file($txtFile, FILE_IGNORE_NEW_LINES);
-        $firstRow = true;
-        $fileKeys = array();
-
-        foreach($contents as $item)
-        {
-            if($firstRow){
-                $fileKeys[] = explode(',', $item);
-                $firstRow = false;
-            } else {
-                $array[] = explode(',', $item);
-            }
-        }
-        
-        return array($fileKeys, $array);
-    }
+    
 
     function ajaxGetDataFromFile($filename)
     {
@@ -188,19 +257,7 @@ class Core
         return json_encode($this->getStations(), JSON_FORCE_OBJECT);
     }
 
-    function getDataList()
-    {
-        //$files = scandir('../data/txt');
-        $files = scandir('data/txt');
-        
-        foreach($files as $key => $file){
-            if($file == '.' || $file == '..'){
-                unset($files[$key]);
-            }    
-        }
-        
-        return array_values($files);
-    }
+    
     
     function getStations()
     {

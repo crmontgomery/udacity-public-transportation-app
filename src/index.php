@@ -26,24 +26,27 @@ include('core/core.php')
           <div class="col-4-12">
             <div class="module">
               <div><small>Step 1</small></div>
-              <button>Departing From:</button>
+              <button type="button" id="btn-depart" data-target="">Departing From:</button>
             </div>
           </div> <!-- /step 1 -->
           <div class="col-4-12">
-            <div class="module">
+            <div class="module unfocus">
               <div><small>Step 2</small></div>
-              <button>Arriving At</button>
+              <button type="button" id="btn-arrive" data-target="">Arriving At</button>
             </div>
           </div><!-- /step 1 -->
           <div class="col-4-12">
-            <div class="module">
+            <div class="module unfocus">
               <div><small>Step 3</small></div>
               <div class="row">
                 <div class="col-6-12">
-                  <button>Weekday</button>
+                  <button id="btn-wknd-day">Weekday</button>
                 </div>
                 <div class="col-6-12">
-                  <button>Weekend</button>
+                  <div class="row">
+                    <div class="col-6-12"><button id="btn-wknd-sat">Sat.</button></div>
+                    <div class="col-6-12"><button class="hollow" id="btn-wknd-sun">Sun.</button></div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -51,30 +54,8 @@ include('core/core.php')
         </div><!-- /row -->
       </div> <!-- /container -->
     </div> <!-- /row-x hero -->
-    <div class="container" id="primary-content">
-      <div class="row">
-          <div class="col-3-12">
-            <div class="module">
-              Stop 1
-            </div>
-          </div> <!-- /stop 1 -->
-          <div class="col-3-12">
-            <div class="module">
-              Stop 2
-            </div>
-          </div><!-- /stop 2 -->
-          <div class="col-3-12">
-            <div class="module">
-              Stop 3
-            </div>
-          </div><!-- /stop 3 -->
-          <div class="col-3-12">
-            <div class="module">
-              Stop 4
-            </div>
-          </div><!-- /stop 4 -->
-        </div><!-- /row -->
-    </div>
+    <div class="container" id="primary-container">
+    </div> <!-- /primary-container -->
   </main>
   <footer>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>

@@ -1,81 +1,3 @@
-.red {
-  background-color: red !important; }
-
-.blue {
-  background-color: blue !important; }
-
-.green {
-  background-color: green !important; }
-
-.yellow {
-  background-color: yellow !important; }
-
-.purple {
-  background-color: purple !important; }
-
-.black {
-  background-color: black !important; }
-
-.padding {
-  padding: 10px; }
-
-#alert-container {
-  background-color: #b71c1c;
-  color: #fff;
-  padding: 10px;
-  position: absolute;
-  top: -200px;
-  left: 0;
-  width: 100%;
-  transition: top .5s;
-  z-index: 2000; }
-  #alert-container i {
-    font-size: 1.2em;
-    margin: 0;
-    padding: 0;
-    vertical-align: middle; }
-  #alert-container #alert-message span:nth-child(2) {
-    margin-left: 5px;
-    vertical-align: middle; }
-  #alert-container button {
-    background-color: transparent !important;
-    color: #ccc;
-    margin-left: 10px;
-    padding: 0;
-    transition: color .5s;
-    vertical-align: middle; }
-  #alert-container button:disabled {
-    color: green; }
-  #alert-container button:disabled:hover {
-    color: green; }
-  #alert-container button:hover {
-    color: #fff; }
-
-#alert-menu {
-  display: none;
-  transition: all .5s; }
-
-#alert-menu ul {
-  width: 100%; }
-  #alert-menu ul li:first-child {
-    text-align: left; }
-    #alert-menu ul li:first-child button {
-      margin: 0; }
-    #alert-menu ul li:first-child i {
-      font-size: 2em; }
-  #alert-menu ul li:first-child,
-  #alert-menu ul li:last-child {
-    width: 20%; }
-  #alert-menu ul li:nth-child(2) {
-    font-size: .8em;
-    padding-top: 5px;
-    text-align: center;
-    width: 60%; }
-  #alert-menu ul li:last-child {
-    text-align: right; }
-    #alert-menu ul li:last-child i {
-      font-size: 2em; }
-
 html {
   height: 100%; }
 
@@ -209,6 +131,84 @@ button:focus {
 
 table {
   width: 100%; }
+
+.red {
+  background-color: red !important; }
+
+.blue {
+  background-color: blue !important; }
+
+.green {
+  background-color: green !important; }
+
+.yellow {
+  background-color: yellow !important; }
+
+.purple {
+  background-color: purple !important; }
+
+.black {
+  background-color: black !important; }
+
+.padding {
+  padding: 10px; }
+
+#alert-container {
+  background-color: #b71c1c;
+  color: #fff;
+  padding: 10px;
+  position: absolute;
+  top: -200px;
+  left: 0;
+  width: 100%;
+  transition: top .5s;
+  z-index: 2000; }
+  #alert-container i {
+    font-size: 1.2em;
+    margin: 0;
+    padding: 0;
+    vertical-align: middle; }
+  #alert-container #alert-message span:nth-child(2) {
+    margin-left: 5px;
+    vertical-align: middle; }
+  #alert-container button {
+    background-color: transparent !important;
+    color: #ccc;
+    margin-left: 10px;
+    padding: 0;
+    transition: color .5s;
+    vertical-align: middle; }
+  #alert-container button:disabled {
+    color: green; }
+  #alert-container button:disabled:hover {
+    color: green; }
+  #alert-container button:hover {
+    color: #fff; }
+
+#alert-menu {
+  display: none;
+  transition: all .5s; }
+
+#alert-menu ul {
+  width: 100%; }
+  #alert-menu ul li:first-child {
+    text-align: left; }
+    #alert-menu ul li:first-child button {
+      margin: 0; }
+    #alert-menu ul li:first-child i {
+      font-size: 2em; }
+  #alert-menu ul li:first-child,
+  #alert-menu ul li:last-child {
+    width: 20%; }
+  #alert-menu ul li:nth-child(2) {
+    font-size: .8em;
+    padding-top: 5px;
+    text-align: center;
+    width: 60%; }
+  #alert-menu ul li:last-child {
+    text-align: right; }
+    #alert-menu ul li:last-child i {
+      font-size: 2em; }
 
 input,
 select,
@@ -506,9 +506,27 @@ main #hero {
   main #hero .row {
     margin-bottom: 0; }
   main #hero .module {
-    background-color: #923526 !important;
+    background-color: #923526;
     color: gainsboro;
     text-transform: uppercase; }
     main #hero .module > div:first-child {
       margin: 0 0 18px 0;
       text-align: center; }
+    main #hero .module.unfocus {
+      opacity: 0.5; }
+    main #hero .module button {
+      border: 1px solid #bb4430; }
+    main #hero .module button.hollow {
+      background-color: transparent;
+      border: 1px solid gainsboro;
+      box-sizing: border-box;
+      color: gainsboro; }
+
+main #primary-container button.active {
+  background-color: #7ebdc2; }
+
+main #primary-container button.active:hover {
+  background-color: #a1cfd2; }
+
+main .station {
+  visibility: hidden; }

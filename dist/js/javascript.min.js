@@ -1,93 +1,182 @@
 $(document).ready(function(){
-  //isOnline() ? console.log('Online') : console.log('Offline');
+  var departingFrom = null,
+      arrivingAt    = null,
+      dayOfWek      = null,
+      stationList = [];
 
-  var build = (function(){
+  getStations();
 
-    function createJsonFromTxt()
-    {
-      getData('buildJson');
-    }
+  $('#btn-depart').on('click', function(){
+  });
 
-    function getStations()
-    {
-      getData('getStations');
-    }
+   $('#btn-arrive').on('click', function(){
+  });
 
-    function displayStations(data)
-    {
-      console.log(data);
-    }
+  $('#btn-wknd-day, #btn-wknd-sat, #btn-wknd-sun').on('click', function(){
+    toggleBtn($(this), 'hollow');
+  });
 
-    return {
-      createJson: createJsonFromTxt,
-      getStations: getStations,
-      displayStations: displayStations
-    };
-  })();
+  $('#primary-container').on('click', '.btn-station', function(){
+    toggleBtn($(this), 'active');
+  });
 
-  var view = (function(){
+  function getStations()
+  {
+    var url    = 'core/core.php',
+        count  = 0,
+        rowNum = 0;
 
-    function viewStations()
-    {
-      $.getJSON('data/json/stops.json', function(data) {
-        for (var key in data) {
-          appendItems(data[key]['stop_id'] + ': ' + data[key]['stop_name']);
+    $.post(url, {method: 'ajax_getStations'}, function(data){
+      stationList = data;
+      for (var key in data) {
+        
+        if((count % 3) == 0 || count == 0)
+        {
+          rowNum++;
+          $('<div class="row" id="row-' + rowNum +'"></div>').appendTo('#primary-container');
         }
-      });
-    }
-
-    function appendItems(data)
-    {
-      var ul = document.getElementById("list");
-      var li = document.createElement("li");
-      li.appendChild(document.createTextNode(data));
-      ul.appendChild(li);
-    }
-
-    return {
-      stations: viewStations
-    };
-  })();
-  
-  // build.createJson();
-  // view.stations();
-  
-  //build.getStations();
-
-  /**
-   * Queries the server for specific data
-   * @param {String} action 
-   * @param {String} variable
-   * @return {Object} JSON
-   */
-  function getData(action, variable)
-  {
-    var url = 'core/ajax.php',
-      file = variable || null;
-
-      var theData = null;
-
-    $.post(url, {method: action, filename: file}, function(data){
-    }).success(function(data){
-
-      switch(action) {
-        case 'getStations':
-             build.displayStations(data);
-             break;
-        case 'buildJson':
-             build.displayStations(data);
-             break;
-        default:
-             console.log('default');
+        appendItems(data[key]['stop_name'], rowNum);
+        count++;
       }
-      
-    }).fail(function(e){
-      console.log(e);
+
+      function appendItems(data, row)
+      {
+        $('<div class="col-4-12 station"><button class="btn-station" >' + data + '</button></div>').appendTo('#row-' + row);
+      }
+
+      showStations();
+
     }, 'json');
+    
   }
 
-  function isOnline()
+  function showStations()
   {
-    return navigator.onLine ? true : false; 
+    $stations = $('.station');
+    var time = 100;
+
+    $stations.each(function() {
+      var name = $(this);
+      setTimeout(test, time, name);
+      time += (150);
+    });
+
+    //http://stackoverflow.com/questions/10942098/simple-fadein-and-visibility-in-jquery softwaretech
+    function test(name)
+    {
+      name.css('visibility','visible').hide().fadeIn("slow");
+    }
   }
+  
+
+  function toggleBtn(btn, className)
+  {
+
+    if(btn.hasClass(className))
+    {
+      btn.removeClass(className);
+    } else {
+      btn.addClass(className);
+    }
+    // if($('#' + btn).hasClass(className))
+    // {
+    //   $('#' + btn).removeClass(className);
+    // } else {
+    //   $('#' + btn).addClass(className);
+    // }
+  }
+
+//http://stackoverflow.com/questions/1181219/determine-if-a-date-is-a-saturday-or-a-sunday-using-javascript andrew moore
+//   var today = new Date();
+// if(today.getDay() == 6 || today.getDay() == 0) alert('Weekend!');
+
+  // var build = (function(){
+
+  //   function createJsonFromTxt()
+  //   {
+  //     getData('buildJson');
+  //   }
+
+  //   function getStations()
+  //   {
+  //     getData('getStations');
+  //   }
+
+  //   function displayStations(data)
+  //   {
+  //     console.log(data);
+  //   }
+
+  //   return {
+  //     createJson: createJsonFromTxt,
+  //     getStations: getStations,
+  //     displayStations: displayStations
+  //   };
+  // })();
+
+  // var view = (function(){
+
+  //   function viewStations()
+  //   {
+  //     $.getJSON('data/json/stops.json', function(data) {
+  //       for (var key in data) {
+  //         appendItems(data[key]['stop_id'] + ': ' + data[key]['stop_name']);
+  //       }
+  //     });
+  //   }
+
+  //   function appendItems(data)
+  //   {
+  //     var ul = document.getElementById("list");
+  //     var li = document.createElement("li");
+  //     li.appendChild(document.createTextNode(data));
+  //     ul.appendChild(li);
+  //   }
+
+  //   return {
+  //     stations: viewStations
+  //   };
+  // })();
+  
+  // // build.createJson();
+  // // view.stations();
+  
+  // //build.getStations();
+
+  // /**
+  //  * Queries the server for specific data
+  //  * @param {String} action 
+  //  * @param {String} variable
+  //  * @return {Object} JSON
+  //  */
+  // function getData(action, variable)
+  // {
+  //   var url = 'core/ajax.php',
+  //     file = variable || null;
+
+  //     var theData = null;
+
+  //   $.post(url, {method: action, filename: file}, function(data){
+  //   }).success(function(data){
+
+  //     switch(action) {
+  //       case 'getStations':
+  //            build.displayStations(data);
+  //            break;
+  //       case 'buildJson':
+  //            build.displayStations(data);
+  //            break;
+  //       default:
+  //            console.log('default');
+  //     }
+      
+  //   }).fail(function(e){
+  //     console.log(e);
+  //   }, 'json');
+  // }
+
+  // function isOnline()
+  // {
+  //   return navigator.onLine ? true : false; 
+  // }
 });

@@ -161,7 +161,13 @@ class Core
     // ajax 
     function ajax_getStations()
     {
-        
+        $sql = 'SELECT * 
+                FROM   stops
+                WHERE  location_type = 1';
+
+        $stations = $this->db->select($sql);
+
+        return json_encode($stations, JSON_FORCE_OBJECT);
     }
 
 
@@ -252,10 +258,6 @@ class Core
         }
     }
 
-    function ajaxGetStations()
-    {
-        return json_encode($this->getStations(), JSON_FORCE_OBJECT);
-    }
 
     
     
@@ -300,8 +302,8 @@ if(isset($_POST['method']) && method_exists($core, $_POST['method'])) {
         case 'buildJson':
             echo $core->buildJson();
             break;
-        case 'getStations':
-            echo $core->ajaxGetStations();
+        case 'ajax_getStations':
+            echo $core->ajax_getStations();
             break;
     }
 }

@@ -1,8 +1,24 @@
+// Core
+@import "core/core";
+
+// Helpers
+@import "helpers/all";
+
 // Components
-@import "components/all";
+@import "components/alert";
 
-// Partials
-@import "partials/all";
+// Layout
+@import "layout/forms";
+@import "layout/grid";
+@import "layout/header";
+@import "layout/modals";
+@import "layout/validation";
 
-// Modules
-@import "modules/all";
+// Pages
+@import "pages/index";
+
+
+// Vendors
+
+// Media Queries
+@import "layout/media-queries";

@@ -1,0 +1,51 @@
+main {
+  #hero {
+    background-color: $color-primary;
+    padding: $pad;
+
+    .row {
+      margin-bottom: 0;
+    }
+
+    .module {
+      background-color: darken($color-primary, 10);
+      color: $color-background;
+      text-transform: uppercase;
+      > div:first-child {
+        margin: 0 0 $pad 0;
+        text-align: center;
+      }
+
+      &.unfocus {
+        opacity: 0.5;
+      }
+
+      button {
+        border: 1px solid $color-primary;
+      }
+
+      button.hollow {
+        background-color: transparent;
+        border: 1px solid $color-background;
+        box-sizing: border-box;
+        color: $color-background;
+      }
+    }
+  }
+
+  #primary-container {
+    button.active {
+      background-color: $color-secondary;
+      //color: $color-background;
+    }
+
+    button.active:hover {
+      background-color: lighten($color-secondary, 10);
+    }
+  }
+
+  .station {
+    visibility: hidden;
+  }
+
+}

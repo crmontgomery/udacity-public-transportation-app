@@ -1,19 +1,21 @@
 input,
 select,
 textarea {
-  background-color: #eeeeee; // grey lighten 3
+  background-color: #eeeeee;
   border: 0;
+  font-size: 1em;
   outline: none;
+  padding: 10px 15px;
   width: 100%;
 }
 
 input:active,
 input:focus {
-  background-color: #bdbdbd; //grey lighten 1
+  background-color: #bdbdbd;
 }
 
 input:hover {
-  background-color: #e0e0e0; // grey lighten 2
+  background-color: #e0e0e0;
 }
 
 // http://stackoverflow.com/questions/9707021/how-do-i-auto-hide-placeholder-text-upon-focus-using-css-or-jquery
@@ -23,16 +25,20 @@ input:focus::-moz-placeholder { color:transparent; } /* FF 19+ */
 input:focus:-ms-input-placeholder { color:transparent; } /* IE 10+ */
 
 button {
-  background-color: #eeeeee; // grey lighten 3
+  background-color: #eeeeee;
   border: 0;
+  font-size: 1em;
   transition: all .5s ease;
+  width: 100%;
 }
 
 button:hover {
-  background-color: #bdbdbd; //grey lighten 1
+  background-color: #bdbdbd;
 }
 
 label {
+  float: left;
   font-size: .85em;
+  margin-bottom: 9px;
   text-transform: uppercase;
 }

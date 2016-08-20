@@ -22,12 +22,13 @@ gulp.task('build', function(callback) {
 
 gulp.task('dev', function(callback) {
   runSequence('clean',
-              ['dev-styles', 'dev-scripts', 'dev-php', 'data', 'dev-html-index','imgmin'],
+              ['dev:styles', 'dev:scripts', 'dev:php', 'data', 'dev:php-index', 'dev:html-index','imgmin'],
               callback);
-  gulp.watch('src/sass/**/*.scss', ['dev-styles']);
-  gulp.watch('src/js/**/*.js', ['dev-scripts']);
-  gulp.watch('src/core/**/*.php', ['dev-php']);
-  gulp.watch('src/**/*.html', ['dev-html-index']);
+  gulp.watch('src/sass/**/*.scss', ['dev:styles']);
+  gulp.watch('src/js/**/*.js', ['dev:scripts']);
+  gulp.watch('src/core/**/*.php', ['dev:php']);
+  gulp.watch('src/**/*.html', ['dev:html-index']);
+  gulp.watch('src/**/*.php', ['dev:php-index']);
 });
 
 gulp.task('clean', function () {
@@ -87,29 +88,38 @@ gulp.task('build-styles', function(){
     .pipe(gulp.dest('dist/css/'));
 });
 
-// Development
-gulp.task('dev-php', function() {
+// ------------
+// DEVELOPMENT
+// ------------
+
+// PHP: Core files
+gulp.task('dev:php', function() {
   gulp.src('src/core/**/*.php')
   .pipe(gulp.dest('dist/core'));
 });
 
-gulp.task('dev-html-index', function() {
+gulp.task('dev:html-index', function() {
   gulp.src('src/**/*.html')
   .pipe(gulp.dest('dist/'));
 });
 
-gulp.task('dev-scripts', function(){
+gulp.task('dev:php-index', function() {
+  gulp.src('src/**/*.php')
+  .pipe(gulp.dest('dist/'));
+});
+
+gulp.task('dev:scripts', function(){
   gulp.src('src/js/**/*.js')
   .pipe(concat('javascript.min.js'))
   .pipe(gulp.dest('dist/js/'));
 });
 
-gulp.task('dev-styles', function(){
+gulp.task('dev:styles', function(){
   gulp.src('src/sass/stylesheet.scss')
     .pipe(sass().on('error', sass.logError))
     .pipe(autoprefixer({
       browsers: ['last 2 versions']
     }))
-    .pipe(rename('stylesheet.min.css'))
+    .pipe(rename('stylesheet.css'))
     .pipe(gulp.dest('dist/css/'));
 });

@@ -1,0 +1,51 @@
+header {
+  background-color: #212121;
+  color: $color-background;
+  padding: 20px 0;
+  
+  button {
+    background-color: transparent !important;
+    color: #bdbdbd;
+    font-size: 1em;
+    padding: 0;
+  }
+  
+  a:link,
+  a:visited {
+    color: #bdbdbd;
+    transition: all .3s ease;
+  }
+  
+  a:hover,
+  a:active,
+  button:hover,
+  button:active {
+    color: #f5f5f5 !important; // TODO figure out why can't extend
+  }
+}
+
+#main-menu {
+  li {
+    padding-right: 10px;
+  }
+}
+
+#user-menu {
+  li {
+    color: #fff;
+    padding-left: 10px;
+  }
+}
+
+#breadcrumbs {
+  margin: 0 0 3px 0;
+
+  li {
+    padding-right: 10px;
+    vertical-align: middle;
+  }
+
+  li:nth-child(odd){
+    padding-top: 2px;
+  }
+}

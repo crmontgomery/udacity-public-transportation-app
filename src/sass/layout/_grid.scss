@@ -1,0 +1,128 @@
+// Modified version of https://css-tricks.com/dont-overthink-it-grids/ by Chris Coyier
+
+.container {
+	margin: 0 auto;
+  padding: 0 $pad;
+	max-width: $width;
+}
+
+.row {
+  margin-left: -$pad;
+  margin-bottom: $pad;
+  overflow: hidden;
+
+  &.reset {
+    margin-left: 0;
+  }
+
+  &.stack {
+    margin-bottom: 0;
+  }
+}
+
+.row-bg {
+  display: block;
+  margin-left: 20px;
+
+  & > [class*='col-']:first-of-type {
+    float: left;
+    padding-left: 0;
+  }
+}
+
+.row-x {
+  margin-bottom: $pad;
+}
+
+.container,
+.grid,
+.row,
+.row-x,
+.row-bg {
+    &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+[class*='col-'] {
+  float: left;
+  padding-left: $pad;
+
+  .reset > & {
+    padding: 0;
+  }
+}
+
+.module {
+  padding: $pad;
+  background: #eee;
+}
+
+$single: 8.33333333333333%;
+
+.col-1-12 {
+  width: $single;
+}
+.col-2-12 {
+  width: $single * 2;
+}
+
+.col-3-12 {
+  width: $single * 3;
+}
+
+.col-4-12 {
+  width: $single * 4;
+}
+
+.col-5-12 {
+  width: $single * 5;
+}
+
+.col-6-12 {
+  width: $single * 6;
+}
+
+.col-7-12 {
+  width: $single * 7;
+}
+
+.col-8-12 {
+  width: $single * 8;
+}
+
+.col-9-12 {
+  width: $single * 9;
+}
+
+.col-10-12 {
+  width: $single * 10;
+}
+
+.col-11-12 {
+  width: $single * 11;
+}
+
+.col-12-12 {
+  width: 100%;
+}
+
+.col-1-5 {
+  width: percentage(1/5);
+}
+
+.col-2-5 {
+  width: percentage(2/5);
+}
+
+.col-3-5 {
+  width: percentage(3/5);
+}
+
+.col-4-5 {
+  width: percentage(4/5);
+}
+
+//TODO: Add Offsets

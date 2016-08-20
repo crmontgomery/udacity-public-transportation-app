@@ -1,7 +1,7 @@
 // TODO Source:  Stackoverflow. Need to find link.
 @mixin modal($height, $width, $color-start, $color-stop) {
   //background: $color-start;
-  @extend .grey.darken-4;
+  background-color: #212121;
   border-radius: 5px;
   box-shadow: 2px 2px 5px #000;
   color: #fff;

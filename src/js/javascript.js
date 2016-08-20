@@ -6,10 +6,14 @@ $(document).ready(function(){
 
   getStations();
 
+
+  // -----------------
+  // Universal Methods
+  // -----------------
   $('#btn-depart').on('click', function(){
   });
 
-   $('#btn-arrive').on('click', function(){
+  $('#btn-arrive').on('click', function(){
   });
 
   $('#btn-wknd-day, #btn-wknd-sat, #btn-wknd-sun').on('click', function(){
@@ -20,8 +24,14 @@ $(document).ready(function(){
     toggleBtn($(this), 'active');
   });
 
+  function isOnline()
+  {
+    return navigator.onLine ? true : false; 
+  }
+
   function getStations()
   {
+    // TODO: Change to have DATA dropped in rather than obtained from
     var url    = 'core/core.php',
         count  = 0,
         rowNum = 0;
@@ -71,19 +81,24 @@ $(document).ready(function(){
 
   function toggleBtn(btn, className)
   {
-
     if(btn.hasClass(className))
     {
       btn.removeClass(className);
     } else {
       btn.addClass(className);
     }
-    // if($('#' + btn).hasClass(className))
-    // {
-    //   $('#' + btn).removeClass(className);
-    // } else {
-    //   $('#' + btn).addClass(className);
-    // }
+  }
+
+  // Online Methods
+  if(isOnline())
+  {
+    // Online Stuff
+  } 
+
+  // Offline Method
+  if(!isOnline())
+  {
+    // Offline Stuff
   }
 
 //http://stackoverflow.com/questions/1181219/determine-if-a-date-is-a-saturday-or-a-sunday-using-javascript andrew moore

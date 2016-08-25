@@ -512,8 +512,6 @@ main #hero {
     main #hero .module > div:first-child {
       margin: 0 0 18px 0;
       text-align: center; }
-    main #hero .module.unfocus {
-      opacity: 0.5; }
     main #hero .module button {
       border: 1px solid #bb4430; }
     main #hero .module button.hollow {

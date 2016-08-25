@@ -20,6 +20,24 @@ class Core
         }
     }
 
+    function testSql()
+    {
+        $sql = 'SELECT a.*, b.*, c.* 
+                FROM   stop_times a
+                LEFT JOIN stops b ON a.stop_id = b.stop_id
+                LEFT JOIN trips c ON a.trip_id = c.trip_id
+                WHERE  a.trip_id = :trip_id';
+
+        $binds = array(
+                    ':trip_id' => '801a'
+                 );
+
+        // return $this->db->select($sql);
+        print '<pre>';
+        print_r($this->db->select($sql, $binds));
+        print '</pre>';
+    }
+
     function loadDatabase()
     {
         try {
@@ -57,7 +75,6 @@ class Core
         } catch(Exception $e) {
             return $e;
         }
-        
     }
 
     function addTransportDataToDb($tableName, $json)
@@ -79,7 +96,6 @@ class Core
         } catch(Exception $e) {
             echo $e;
         }
-        
     }
 
     function isDatabaseLoaded($loaded = false)
@@ -98,7 +114,6 @@ class Core
 
             return $this->db->select($sql);
         }
-        
     }
 
     private function parseArrayForJson($keys, $data)
@@ -170,6 +185,97 @@ class Core
         return json_encode($stations, JSON_FORCE_OBJECT);
     }
 
+    function ajax_tripTest($start, $end, $day)
+    {
+        // $sql = 'SELECT a.*, b.*, c.* 
+        //         FROM   stop_times a
+        //         LEFT JOIN stops b ON a.stop_id = b.stop_id
+        //         LEFT JOIN trips c ON a.trip_id = c.trip_id
+        //         WHERE  b.parent_station = :start OR b.parent_station = :end';
+
+        $sql = 'SELECT a.trip_id, a.arrival_time, a.departure_time, a.stop_id, a. stop_sequence,
+                        b.stop_name, b.parent_station, b.wheelchair_boarding, b.zone_id,
+                        c.route_id, c.service_id, c.trip_short_name
+                FROM   stop_times a
+                LEFT JOIN stops b ON a.stop_id = b.stop_id
+                LEFT JOIN trips c ON a.trip_id = c.trip_id
+                WHERE b.parent_station = :start AND c.service_id = :day';
+
+        $binds = array(
+                    ':start' => $start,
+                    ':day' => $day
+                 );
+
+        
+
+        $startTrains = $this->db->select($sql, $binds);
+
+        $sql = 'SELECT a.trip_id, a.arrival_time, a.departure_time, a.stop_id, a. stop_sequence,
+                        b.stop_name, b.parent_station, b.wheelchair_boarding, b.zone_id,
+                        c.route_id, c.service_id, c.trip_short_name
+                FROM   stop_times a
+                LEFT JOIN stops b ON a.stop_id = b.stop_id
+                LEFT JOIN trips c ON a.trip_id = c.trip_id
+                WHERE b.parent_station = :end AND c.service_id = :day';
+
+        $binds = array(
+                    ':end'   => $end,
+                    ':day' => $day
+                 );
+
+
+        $endTrains = $this->db->select($sql, $binds);
+        $newList = array();
+
+        foreach($startTrains as $trainA)
+        {
+            foreach($endTrains as $trainB)
+            {
+                if($trainA['trip_id'] == $trainB['trip_id'] && $trainA['stop_sequence'] < $trainB['stop_sequence'])
+                {
+                    $newList[] = array(
+                        'trip_id' => $trainA['trip_short_name'],
+                        'start' => date("g:i a", strtotime($trainA['arrival_time'])),
+                        'end' => date("g:i a", strtotime($trainB['arrival_time'])),
+                        'duration' => (strtotime($trainB['arrival_time']) - strtotime($trainA['arrival_time'])) / 60,
+                        'price' => $this->getFare($trainA['route_id'], $trainA['zone_id'], $trainB['zone_id'])
+                    );
+                }
+            }
+        }
+
+        return array($newList);
+    }
+
+    private function getFare($route, $origin, $destination)
+    {
+        echo $route . '-' . $origin . '-' . $destination;
+        $sql = 'SELECT fare_id
+                FROM fare_rules
+                 WHERE route_id = :route 
+                 AND origin_id = :origin 
+                 AND destination_id = :destination';
+
+        $binds = array(
+                    ':route'   => $route,
+                    ':origin' => $origin,
+                    ':destination' => $destination
+                 );
+
+        $fareId = $this->db->select($sql, $binds);
+        var_dump($farId);
+
+        $sql = 'SELECT price
+                FROM fare_attributes
+                WHERE fare_id = :fareId';
+
+        $binds = array(
+                    ':fareId'   => $fareId
+                 );
+
+        return $this->db->select($sql, $binds);
+    }
+
 
     // OLD
 
@@ -222,8 +328,6 @@ class Core
     {
         return file_exists($filename) ? true : false;
     }
-
-    
 
     function ajaxGetDataFromFile($filename)
     {
@@ -282,10 +386,11 @@ class Core
         print_r($array);
         print '</pre>';
     }
-
 }
 
 $core = new Core();
+
+$trip = $core->ajax_tripTest('ctbe', 'ctsmat', 'CT-16APR-Caltrain-Saturday-02');
 
 if(isset($_POST['method']) && method_exists($core, $_POST['method'])) {
     $method = $_POST['method'];
@@ -304,6 +409,9 @@ if(isset($_POST['method']) && method_exists($core, $_POST['method'])) {
             break;
         case 'ajax_getStations':
             echo $core->ajax_getStations();
+            break;
+        case 'ajax_tripTest':
+            echo $core->ajax_tripTest();
             break;
     }
 }

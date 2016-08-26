@@ -520,6 +520,12 @@ main #hero {
       box-sizing: border-box;
       color: gainsboro; }
 
+main #btn-close-form {
+  background-color: #bb4430;
+  border-radius: 0 0 20px 20px;
+  color: gainsboro;
+  width: auto; }
+
 main #primary-container button.active {
   background-color: #7ebdc2; }
 

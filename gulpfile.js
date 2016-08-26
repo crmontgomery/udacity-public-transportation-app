@@ -22,13 +22,15 @@ gulp.task('build', function(callback) {
 
 gulp.task('dev', function(callback) {
   runSequence('clean',
-              ['dev:styles', 'dev:scripts', 'dev:php', 'data', 'dev:php-index', 'dev:html-index','imgmin'],
+              ['dev:styles', 'dev:scripts', 'dev:php', 'data', 'dev:php-index', 'dev:html-index','imgmin', 'icons'],
               callback);
   gulp.watch('src/sass/**/*.scss', ['dev:styles']);
   gulp.watch('src/js/**/*.js', ['dev:scripts']);
   gulp.watch('src/core/**/*.php', ['dev:php']);
   gulp.watch('src/**/*.html', ['dev:html-index']);
   gulp.watch('src/**/*.php', ['dev:php-index']);
+  gulp.watch('src/**/*.png', ['imgmin']);
+  gulp.watch('src/**/*.svg', ['icons']);
 });
 
 gulp.task('clean', function () {
@@ -42,6 +44,11 @@ gulp.task('clean', function () {
 gulp.task('data', function() {
   gulp.src('src/data/txt/**/*.txt')
   .pipe(gulp.dest('dist/data/txt'));
+});
+
+gulp.task('icons', function() {
+  gulp.src('src/icons/**/*.svg')
+  .pipe(gulp.dest('dist/icons/'));
 });
 
 gulp.task('imgmin', () => gulp.src('src/img/*')

@@ -11,9 +11,12 @@ $(document).ready(function(){
   // Universal Methods
   // -----------------
   $('#btn-depart').on('click', function(){
+    departingFrom = null;
+    toggleStations();
   });
 
   $('#btn-arrive').on('click', function(){
+    arrivingAt = null;
   });
 
   $('#btn-wk-day, #btn-wk-sat, #btn-wk-sun').on('click', function(){
@@ -23,7 +26,12 @@ $(document).ready(function(){
   $('#primary-container').on('click', '.btn-station', function(){
     var stopId = $(this).attr('id');
     toggleBtn($(this), 'active');
-    setDepartLocation(stopId);
+    if(departingFrom == null && arrivingAt == null){
+      setDepartLocation(stopId);
+    } else if(departingFrom != null && arrivingAt == null){
+      setArrivalLocation(stopId);
+      toggleStations();
+    } 
   });
 
   function isOnline()
@@ -91,9 +99,27 @@ $(document).ready(function(){
     }
   }
 
+  function toggleStations()
+  {
+    var primary = $('#primary-container');
+    if(primary.is(':visible'))
+    {
+      primary.fadeOut();
+    } else if(primary.is(':hidden')){
+      primary.fadeIn();
+    }
+  }
+
   function setDepartLocation(stopId)
   {
+    departingFrom = stopId;
+    $('#btn-depart').text(stopId);
+  }
 
+  function setArrivalLocation(stopId)
+  {
+    departingFrom = stopId;
+    $('#btn-arrive').text(stopId);
   }
 
   function getToday()

@@ -57,34 +57,7 @@ include('core/core.php')
         </div><!-- /row -->
       </div> <!-- /container -->
     </div> <!-- /row-x hero -->
-    <div class="container">
-      <div class="row">
-        <div class="col-1-12"><div class="module">Train</div></div>
-        <div class="col-2-12"><div class="module">Depart</div></div>
-        <div class="col-2-12"><div class="module">Arrive AT</div></div>
-        <div class="col-4-12"><div class="module">Stop Name</div></div>
-        <div class="col-1-12"><div class="module">Bikes</div></div>
-        <div class="col-2-12"><div class="module">Wheelchairs</div></div>
-      </div>
-    </div>
-    <div class="container">
-    <?php
-    foreach($trip[0] as $item)
-    {
-    print '
-      <div class="row">
-        <div class="col-1-12"><div class="module">' . $item['trip_id'] . '</div></div>
-        <div class="col-2-12"><div class="module">' . $item['start'] . '</div></div>
-        <div class="col-2-12"><div class="module">' . $item['end'] . '</div></div>
-        <div class="col-4-12"><div class="module">' . $item['duration'] . 'min</div></div>
-        <div class="col-1-12"><div class="module">' . $item['price'] . '</div></div>
-        <div class="col-2-12"><div class="module">&nbsp;</div></div>
-      </div>
-    
-    ';
-    }
-    ?>
-    </div>
+
     <div class="container" id="primary-container">
     </div> <!-- /primary-container -->
   </main>

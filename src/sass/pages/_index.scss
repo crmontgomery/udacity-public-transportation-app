@@ -33,6 +33,13 @@ main {
     }
   }
 
+  #btn-close-form {
+    background-color: $color-primary;
+    border-radius: 0 0 20px 20px;
+    color: $color-background;
+    width: auto;
+  }
+
   #primary-container {
     button.active {
       background-color: $color-secondary;

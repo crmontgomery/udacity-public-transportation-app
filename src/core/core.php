@@ -206,8 +206,6 @@ class Core
                     ':day' => $day
                  );
 
-        
-
         $startTrains = $this->db->select($sql, $binds);
 
         $sql = 'SELECT a.trip_id, a.arrival_time, a.departure_time, a.stop_id, a. stop_sequence,
@@ -223,9 +221,10 @@ class Core
                     ':day' => $day
                  );
 
-
         $endTrains = $this->db->select($sql, $binds);
-        $newList = array();
+        $tripSchedule = array();
+        $tripDetails = array();
+        $detailsSet = false;
 
         foreach($startTrains as $trainA)
         {
@@ -233,23 +232,32 @@ class Core
             {
                 if($trainA['trip_id'] == $trainB['trip_id'] && $trainA['stop_sequence'] < $trainB['stop_sequence'])
                 {
-                    $newList[] = array(
+                    $price = $this->getFare($trainA['route_id'], $trainA['zone_id'], $trainB['zone_id']);
+
+                    if(!$detailsSet)
+                    {
+                        $tripDetails[] = array(
+                            'station start' => $trainA['stop_name'],
+                            'station end' => $trainB['stop_name'],
+                            'duration' => (strtotime($trainB['arrival_time']) - strtotime($trainA['arrival_time'])) / 60,
+                            'price' => '$' . $price[0]['price']
+                        );
+                        $detailsSet = true;
+                    }
+
+                    $tripSchedule[] = array(
                         'trip_id' => $trainA['trip_short_name'],
                         'start' => date("g:i a", strtotime($trainA['arrival_time'])),
-                        'end' => date("g:i a", strtotime($trainB['arrival_time'])),
-                        'duration' => (strtotime($trainB['arrival_time']) - strtotime($trainA['arrival_time'])) / 60,
-                        'price' => $this->getFare($trainA['route_id'], $trainA['zone_id'], $trainB['zone_id'])
+                        'end' => date("g:i a", strtotime($trainB['arrival_time']))
                     );
                 }
             }
         }
-
-        return array($newList);
+        return array($tripDetails, $tripSchedule);
     }
 
     private function getFare($route, $origin, $destination)
     {
-        echo $route . '-' . $origin . '-' . $destination;
         $sql = 'SELECT fare_id
                 FROM fare_rules
                  WHERE route_id = :route 
@@ -263,14 +271,13 @@ class Core
                  );
 
         $fareId = $this->db->select($sql, $binds);
-        var_dump($farId);
-
+        
         $sql = 'SELECT price
                 FROM fare_attributes
                 WHERE fare_id = :fareId';
 
         $binds = array(
-                    ':fareId'   => $fareId
+                    ':fareId'   => $fareId[0]['fare_id']
                  );
 
         return $this->db->select($sql, $binds);

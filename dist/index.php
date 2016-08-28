@@ -57,18 +57,16 @@ include('core/core.php')
       </div> <!-- /container -->
     </div> <!-- /row-x hero -->
     <div class="container" id="primary-container">
-      <div class="" id="schedule-container">
-        <div class="row" id="trip-details">
-          <div class="col-6-12" id="time">
-            &nbsp;
-          </div>
-          <div class="col-6-12">
-            &nbsp;
-          </div>
+      <div class="row" id="trip-details">
+        <div class="col-6-12" id="time">
+          Stuff
         </div>
-        <div class="row" id="trip-schedule"></div>
+        <div class="col-6-12">
+          Things
+        </div>
       </div>
-      <div class="" id="station-container"></div>
+      <div class="row-x" id="schedule-container"></div>
+      <div id="station-container"></div>
     </div> <!-- /primary-container -->
   </main>
   <footer>

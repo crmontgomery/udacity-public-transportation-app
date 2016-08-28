@@ -42,7 +42,7 @@ class Core
     {
         try {
             // Get file list
-            $fileList = $this->getDataList();
+            $fileList = $this-_>getDataList();
 
             // Loop through the filelist
             foreach($fileList as $file)
@@ -103,7 +103,7 @@ class Core
         if($loaded)
         {
             $table = 'settings';
-            $data = array(
+            $data  = array(
                     'data_loaded'     => 1
                     );
 
@@ -150,7 +150,7 @@ class Core
         {
             if($firstRow){
                 $fileKeys[] = explode(',', $item);
-                $firstRow = false;
+                $firstRow   = false;
             } else {
                 $array[] = explode(',', $item);
             }
@@ -159,7 +159,7 @@ class Core
         return array($fileKeys, $array);
     }
 
-    function getDataList()
+    private function _getDataList()
     {
         //$files = scandir('../data/txt');
         $files = scandir('data/txt');
@@ -178,7 +178,8 @@ class Core
     {
         $sql = 'SELECT * 
                 FROM   stops
-                WHERE  location_type = 1';
+                WHERE  location_type = 1
+                ORDER BY stop_name ASC';
 
         $stations = $this->db->select($sql);
 
@@ -211,7 +212,7 @@ class Core
 
         $binds = array(
                     ':start' => $start,
-                    ':day' => $day
+                    ':day'   => $day
                  );
 
         $startTrains = $this->db->select($sql, $binds);
@@ -240,25 +241,25 @@ class Core
             {
                 if($trainA['trip_id'] == $trainB['trip_id'] && $trainA['stop_sequence'] < $trainB['stop_sequence'])
                 {
-                    $price = $this->getFare($trainA['route_id'], $trainA['zone_id'], $trainB['zone_id']);
+                    $price = $this->_getFare($trainA['route_id'], $trainA['zone_id'], $trainB['zone_id']);
 
                     if(!$detailsSet)
                     {
                         $tripDetails[] = array(
                             'station start' => $trainA['stop_name'],
-                            'station end' => $trainB['stop_name'],
-                            'price' => '$' . $price[0]['price']
+                            'station end'   => $trainB['stop_name'],
+                            'price'         => '$' . $price[0]['price']
                         );
                         $detailsSet = true;
                     }
 
                     $tripSchedule[] = array(
-                        'trip_id' => $trainA['trip_short_name'],
-                        'start' => date("g:i a", strtotime($trainA['arrival_time'])),
+                        'trip_id'   => $trainA['trip_short_name'],
+                        'start'     => date("g:i a", strtotime($trainA['arrival_time'])),
                         'start-raw' => $trainA['arrival_time'],
-                        'end' => date("g:i a", strtotime($trainB['arrival_time'])),
-                        'end-raw' => $trainB['arrival_time'],
-                        'duration' => (strtotime($trainB['arrival_time']) - strtotime($trainA['arrival_time'])) / 60
+                        'end'       => date("g:i a", strtotime($trainB['arrival_time'])),
+                        'end-raw'   => $trainB['arrival_time'],
+                        'duration'  => (strtotime($trainB['arrival_time']) - strtotime($trainA['arrival_time'])) / 60
                     );
                 }
             }
@@ -267,7 +268,7 @@ class Core
         return json_encode(array('details' => $tripDetails, 'schedule' => $tripSchedule), JSON_FORCE_OBJECT);
     }
 
-    private function getFare($route, $origin, $destination)
+    private function _getFare($route, $origin, $destination)
     {
         $sql = 'SELECT fare_id
                 FROM fare_rules
@@ -296,10 +297,9 @@ class Core
 
 
     // OLD
-
     function buildJson()
     {
-        $files = $this->getDataList();
+        $files = $this->_getDataList();
         
         try {
             foreach($files as $file) {
@@ -310,8 +310,6 @@ class Core
             echo $e;
         }
     }
-
-    
 
     function createJsonFile($filename, $data)
     {
@@ -342,7 +340,7 @@ class Core
         }
     }
 
-    function pain($filename)
+    function fileExist($filename)
     {
         return file_exists($filename) ? true : false;
     }
@@ -353,7 +351,7 @@ class Core
         try{
             if(file_exists($txtFile))
             {
-                $array = array();
+                $array    = array();
                 $contents = file($txtFile, FILE_IGNORE_NEW_LINES);
                 $firstRow = true;
                 $fileKeys = array();
@@ -362,7 +360,7 @@ class Core
                 {
                     if($firstRow){
                         $fileKeys[] = explode(',', $item);
-                        $firstRow = false;
+                        $firstRow   = false;
                     } else {
                         $array[] = explode(',', $item);
                     }
@@ -385,10 +383,10 @@ class Core
         $stations = $this->getDataFromFile('stops.txt');
         $stationList = [];
         foreach($stations[0] as $station){
-            $stationTemp = array();
-            $stationTemp['id'] = $station[0];
+            $stationTemp         = array();
+            $stationTemp['id']   = $station[0];
             $stationTemp['name'] = $station[2];
-            $stationList[] = $stationTemp;
+            $stationList[]       = $stationTemp;
         }
         
         //return array_unique($stationList);

@@ -534,3 +534,8 @@ main #primary-container button.active:hover {
 
 main .station {
   visibility: hidden; }
+
+main #trip-schedule span > small {
+  color: #74676a;
+  text-transform: uppercase;
+  margin-bottom: 3px; }

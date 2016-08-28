@@ -22,7 +22,7 @@ gulp.task('build', function(callback) {
 
 gulp.task('dev', function(callback) {
   runSequence('clean',
-              ['dev:styles', 'dev:scripts', 'dev:php', 'data', 'dev:php-index', 'dev:html-index','imgmin', 'icons'],
+              ['dev:styles', 'dev:scripts', 'dev:php', 'data', 'dev:php-index', 'dev:html-index', 'dev:jquery', 'imgmin', 'icons'],
               callback);
   gulp.watch('src/sass/**/*.scss', ['dev:styles']);
   gulp.watch('src/js/**/*.js', ['dev:scripts']);
@@ -116,8 +116,13 @@ gulp.task('dev:php-index', function() {
 });
 
 gulp.task('dev:scripts', function(){
-  gulp.src('src/js/**/*.js')
+  gulp.src(['src/js/**/*.js', '!src/js/jquery-3.1.0.min.js'])
   .pipe(concat('javascript.min.js'))
+  .pipe(gulp.dest('dist/js/'));
+});
+
+gulp.task('dev:jquery', function(){
+  gulp.src('src/js/jquery-3.1.0.min.js')
   .pipe(gulp.dest('dist/js/'));
 });
 

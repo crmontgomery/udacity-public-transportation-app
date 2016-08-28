@@ -55,4 +55,12 @@ main {
     visibility: hidden;
   }
 
+  #trip-schedule {
+    span > small {
+      color: lighten($color-typo, 30);
+      text-transform: uppercase;
+      margin-bottom: 3px;
+    }
+  }
+
 }

@@ -2,17 +2,20 @@ $(document).ready(function(){
   var departingFrom = null,
       arrivingAt    = null,
       dayOfWk       = null,
-      stationList = [];
+      currentTime   = null,
+      stationList   = [],
+      tripDetails   = [],
+      tripSchedule  = [];
 
   getStations();
   getToday();
+  startTime();
 
   // -----------------
   // Universal Methods
   // -----------------
   $('#btn-depart').on('click', function(){
     departingFrom = null;
-    toggleStations();
   });
 
   $('#btn-arrive').on('click', function(){
@@ -20,7 +23,8 @@ $(document).ready(function(){
   });
 
   $('#btn-wk-day, #btn-wk-sat, #btn-wk-sun').on('click', function(){
-    toggleBtn($(this), 'hollow');
+    setDay($(this));
+    getSchedule();
   });
 
   $('#primary-container').on('click', '.btn-station', function(){
@@ -28,9 +32,11 @@ $(document).ready(function(){
     toggleBtn($(this), 'active');
     if(departingFrom == null && arrivingAt == null){
       setDepartLocation(stopId);
+      $('#step-1').text('Departing From');
     } else if(departingFrom != null && arrivingAt == null){
       setArrivalLocation(stopId);
-      toggleStations();
+      $('#step-2').text('Arriving At');
+      getSchedule();
     } 
   });
 
@@ -53,7 +59,7 @@ $(document).ready(function(){
         if((count % 3) == 0 || count == 0)
         {
           rowNum++;
-          $('<div class="row" id="row-' + rowNum +'"></div>').appendTo('#primary-container');
+          $('<div class="row" id="row-' + rowNum +'"></div>').appendTo('#station-container');
         }
         //appendItems(data[key]['stop_name'], rowNum);
         appendItems(data, rowNum);
@@ -69,6 +75,87 @@ $(document).ready(function(){
 
     }, 'json');
     
+  }
+
+  function getSchedule()
+  {
+    if(departingFrom != null && arrivingAt != null)
+    {
+      var url    = 'core/core.php';
+        
+      $.post(url, {method: 'ajax_getSchedule', day: dayOfWk, start: departingFrom, stop: arrivingAt}, function(data){
+        tripDetails  = data['details'][0];
+        tripSchedule = data['schedule'];
+        toggleStations();
+        toggleSchedule();
+      }, 'json');
+    }
+  }
+
+  function toggleSchedule()
+  {
+    if($('#schedule-container').text() != '')
+    {
+      $('#schedule-container').text('');
+    }
+    var data = tripSchedule,
+        count  = 0,
+        rowNum = 0;
+    for (var key in data) {
+        
+      if((count % 2) == 0 || count == 0)
+      {
+        rowNum++;
+        $('<div class="row" id="row-schedule-' + rowNum +'"></div>').appendTo('#schedule-container');
+      }
+      appendItems(data, rowNum);
+      count++;
+    }
+
+    var startRaw = data[key]['start-raw'],
+        endRaw = data[key]['end-raw'];
+
+    function appendItems(data, row)
+    {
+      $(`<div class="col-6-12">
+          <div class="row reset">
+            <div class="col-3-12 reset">
+              <div class="module">
+                <span><small>Departing at</small><span> <br/>
+                <span>` + data[key]['start'] + `<span>
+              </div>
+            </div>
+            <div class="col-3-12 reset">
+              <div class="module">
+                <span><small>Arriving at</small><span> <br/>
+                <span>` + data[key]['end'] + `<span>
+              </div>
+            </div>
+            <div class="col-3-12 reset">
+              <div class="module">
+                <span><small>Duration</small><span> <br/>
+                <span>` + data[key]['duration'] + ` Min<span>
+              </div>
+            </div>
+            <div class="col-3-12 reset">
+              <div class="module">
+                <span><small>Departing In</small><span> <br/>
+                <span>` + (Date.parse('01/01/2011 ' + currentTime.h + ':' + currentTime.m + ':' + currentTime.s) - Date.parse('01/01/2011 ' + data[key]['start-raw'])) + `<span>
+              </div>
+            </div>
+          </div>
+        </div>`).appendTo('#row-schedule-' + row);
+    }
+  }
+
+  function timeToSeconds(time) {
+    time = time.split(/:/);
+    time[0] * 3600 + time[1] * 60 + time[2];
+  }
+
+  function toMin(sec)
+  {
+    return sec;
   }
 
   function showStations()
@@ -101,7 +188,7 @@ $(document).ready(function(){
 
   function toggleStations()
   {
-    var primary = $('#primary-container');
+    var primary = $('#station-container');
     if(primary.is(':visible'))
     {
       primary.fadeOut();
@@ -113,13 +200,13 @@ $(document).ready(function(){
   function setDepartLocation(stopId)
   {
     departingFrom = stopId;
-    $('#btn-depart').text(stopId);
+    $('#btn-depart').text($('#' + stopId).text());
   }
 
   function setArrivalLocation(stopId)
   {
-    departingFrom = stopId;
-    $('#btn-arrive').text(stopId);
+    arrivingAt = stopId;
+    $('#btn-arrive').text($('#' + stopId).text());
   }
 
   function getToday()
@@ -141,12 +228,56 @@ $(document).ready(function(){
     }
   }
 
-  setToday();
-
   // User Override
-  function setToday(userDay)
+  // TODO: FIX THIS MESS
+  function setDay(userDay)
   {
-    var btn = ['#btn-wk-sat', '#btn-wk-sun', '#btn-wk-day'];
+    var btn = {saturday: '#btn-wk-sat', sunday: '#btn-wk-sun', weekday: '#btn-wk-day'};
+
+    switch('#' + userDay.attr('id')) {
+      case btn.saturday:
+        dayOfWk = 'saturday';
+        if($(btn.saturday).hasClass('hollow')) {
+          toggleBtn($(btn.saturday), 'hollow');
+          if(!$(btn.sunday).hasClass('hollow'))
+          {
+            toggleBtn($(btn.sunday), 'hollow');
+          }
+          if(!$(btn.weekday).hasClass('hollow'))
+          {
+            toggleBtn($(btn.weekday), 'hollow');
+          }
+        }
+        break;
+      case btn.sunday:
+        dayOfWk = 'sunday';
+        if($(btn.sunday).hasClass('hollow')) {
+          toggleBtn($(btn.sunday), 'hollow');
+          if(!$(btn.saturday).hasClass('hollow'))
+          {
+            toggleBtn($(btn.saturday), 'hollow');
+          }
+          if(!$(btn.weekday).hasClass('hollow'))
+          {
+            toggleBtn($(btn.weekday), 'hollow');
+          }
+        }
+        break;
+      case btn.weekday:
+        dayOfWk = 'weekday';
+        if($(btn.weekday).hasClass('hollow')) {
+          toggleBtn($(btn.weekday), 'hollow');
+          if(!$(btn.sunday).hasClass('hollow'))
+          {
+            toggleBtn($(btn.sunday), 'hollow');
+          }
+          if(!$(btn.saturday).hasClass('hollow'))
+          {
+            toggleBtn($(btn.saturday), 'hollow');
+          }
+        }
+        break;
+    }
   }
 
   // --------------
@@ -165,6 +296,30 @@ $(document).ready(function(){
   {
     // Offline Stuff
     console.log('Offline');
+  }
+
+  
+
+  // http://www.w3schools.com/js/tryit.asp?filename=tryjs_timing_clock
+  function startTime() {
+    var today = new Date();
+    var h = today.getHours();
+    var m = today.getMinutes();
+    var s = today.getSeconds();
+    m = checkTime(m);
+    s = checkTime(s);
+    // document.getElementById('time').innerHTML =
+    // h + ":" + m + ":" + s;
+    currentTime = h + ":" + m + ":" + s;
+    console.log(currentTime);
+    var t = setTimeout(startTime, 1000);
+    
+    
+
+  }
+  function checkTime(i) {
+      if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+      return i;
   }
 
 });

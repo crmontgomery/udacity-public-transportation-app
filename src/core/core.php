@@ -185,13 +185,21 @@ class Core
         return json_encode($stations, JSON_FORCE_OBJECT);
     }
 
-    function ajax_tripTest($start, $end, $day)
+    function ajax_getSchedule($start, $end, $dayPlain)
     {
-        // $sql = 'SELECT a.*, b.*, c.* 
-        //         FROM   stop_times a
-        //         LEFT JOIN stops b ON a.stop_id = b.stop_id
-        //         LEFT JOIN trips c ON a.trip_id = c.trip_id
-        //         WHERE  b.parent_station = :start OR b.parent_station = :end';
+        $day = null;
+        switch($dayPlain) {
+            case 'saturday' :
+                $day = 'CT-16APR-Caltrain-Saturday-02';
+                break;
+            case 'sunday' :
+                $day = 'CT-16APR-Caltrain-Sunday-02';
+                break;
+            case 'weekday' :
+                $day = 'CT-16APR-Caltrain-Weekday-01';
+                break;
+
+        }
 
         $sql = 'SELECT a.trip_id, a.arrival_time, a.departure_time, a.stop_id, a. stop_sequence,
                         b.stop_name, b.parent_station, b.wheelchair_boarding, b.zone_id,
@@ -239,7 +247,6 @@ class Core
                         $tripDetails[] = array(
                             'station start' => $trainA['stop_name'],
                             'station end' => $trainB['stop_name'],
-                            'duration' => (strtotime($trainB['arrival_time']) - strtotime($trainA['arrival_time'])) / 60,
                             'price' => '$' . $price[0]['price']
                         );
                         $detailsSet = true;
@@ -248,12 +255,16 @@ class Core
                     $tripSchedule[] = array(
                         'trip_id' => $trainA['trip_short_name'],
                         'start' => date("g:i a", strtotime($trainA['arrival_time'])),
-                        'end' => date("g:i a", strtotime($trainB['arrival_time']))
+                        'start-raw' => $trainA['arrival_time'],
+                        'end' => date("g:i a", strtotime($trainB['arrival_time'])),
+                        'end-raw' => $trainB['arrival_time'],
+                        'duration' => (strtotime($trainB['arrival_time']) - strtotime($trainA['arrival_time'])) / 60
                     );
                 }
             }
         }
-        return array($tripDetails, $tripSchedule);
+        // return array($tripDetails, $tripSchedule);
+        return json_encode(array('details' => $tripDetails, 'schedule' => $tripSchedule), JSON_FORCE_OBJECT);
     }
 
     private function getFare($route, $origin, $destination)
@@ -369,9 +380,6 @@ class Core
         }
     }
 
-
-    
-    
     function getStations()
     {
         $stations = $this->getDataFromFile('stops.txt');
@@ -397,7 +405,7 @@ class Core
 
 $core = new Core();
 
-$trip = $core->ajax_tripTest('ctbe', 'ctsmat', 'CT-16APR-Caltrain-Saturday-02');
+// $trip = $core->ajax_tripTest('ctbe', 'ctsmat', 'CT-16APR-Caltrain-Saturday-02');
 
 if(isset($_POST['method']) && method_exists($core, $_POST['method'])) {
     $method = $_POST['method'];
@@ -417,8 +425,8 @@ if(isset($_POST['method']) && method_exists($core, $_POST['method'])) {
         case 'ajax_getStations':
             echo $core->ajax_getStations();
             break;
-        case 'ajax_tripTest':
-            echo $core->ajax_tripTest();
+        case 'ajax_getSchedule':
+            echo $core->ajax_getSchedule($_POST['start'], $_POST['stop'], $_POST['day']);
             break;
     }
 }

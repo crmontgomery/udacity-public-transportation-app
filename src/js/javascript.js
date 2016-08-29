@@ -15,11 +15,11 @@ $(document).ready(function(){
   // -----------------
   // Universal Methods
   // -----------------
-  $('#btn-depart').on('click', function(){
+  $('#btn-depart').on('click', function() {
     departingFrom = null;
   });
 
-  $('#btn-arrive').on('click', function(){
+  $('#btn-arrive').on('click', function() {
     if(arrivingAt != null){
       toggleBtn($(arrivingAt), 'hollow');
       arrivingAt = null;
@@ -28,53 +28,49 @@ $(document).ready(function(){
   });
 
   // The day is selected automatically unless the user selects on specifically
-  $('#btn-wk-day, #btn-wk-sat, #btn-wk-sun').on('click', function(){
+  $('#btn-wk-day, #btn-wk-sat, #btn-wk-sun').on('click', function() {
     setDay($(this));
-    if(departingFrom != null && arrivingAt != null){
+    if(departingFrom != null && arrivingAt != null) {
       getSchedule();
     }
   });
 
   // User selects a station from the list.
-  $('#station-container').on('click', '.btn-station', function(){
+  $('#station-container').on('click', '.btn-station', function() {
     var stopId = $(this).attr('id');
     toggleBtn($(this), 'active');
-    if(departingFrom == null && arrivingAt == null){
+    if(departingFrom == null && arrivingAt == null) {
       setDepartLocation(stopId);
       $('#step-1').text('Departing From');
-    } else if(departingFrom != null && arrivingAt == null){
+    } else if(departingFrom != null && arrivingAt == null) {
       setArrivalLocation(stopId);
       $('#step-2').text('Arriving At');
       getSchedule();
     } 
   });
 
-  function setDepartLocation(stopId)
-  {
+  function setDepartLocation(stopId) {
     departingFrom = stopId;
     $('#btn-depart').text($('#' + stopId).text());
   }
 
-  function setArrivalLocation(stopId)
-  {
+  function setArrivalLocation(stopId) {
     arrivingAt = stopId;
     $('#btn-arrive').text($('#' + stopId).text());
   }
 
   // Stations
-  function getStations()
-  {
+  function getStations() {
     // TODO: Change to have DATA dropped in rather than obtained from
     var url    = 'core/core.php',
         count  = 0,
         rowNum = 0;
 
-    $.post(url, {method: 'ajax_getStations'}, function(data){
+    $.post(url, {method: 'ajax_getStations'}, function(data) {
       stationList = data;
+      //TODO: Fix to comform to standards
       for (var key in data) {
-        
-        if((count % 3) == 0 || count == 0)
-        {
+        if((count % 3) == 0 || count == 0) {
           rowNum++;
           $('<div class="row" id="row-' + rowNum +'"></div>').appendTo('#station-container');
         }
@@ -83,19 +79,16 @@ $(document).ready(function(){
         count++;
       }
 
-      function appendItems(data, row)
-      {
+      function appendItems(data, row) {
         $('<div class="col-4-12 station"><button class="btn-station" id="' + data[key]['stop_id'] + '">' + data[key]['stop_name'].replace(" Caltrain", "") + '</button></div>').appendTo('#row-' + row);
       }
-
       showStations();
 
     }, 'json');
   }
 
   // Animates the stations being listed
-  function showStations()
-  {
+  function showStations() {
     $stations = $('.station');
     var time = 100;
 
@@ -106,15 +99,13 @@ $(document).ready(function(){
     });
 
     //http://stackoverflow.com/questions/10942098/simple-fadein-and-visibility-in-jquery by softwaretech
-    function fadeSlow(name)
-    {
+    function fadeSlow(name) {
       name.css('visibility','visible').hide().fadeIn("slow");
     }
   }
 
   // Used to hide the stations container when trips are displayed
-  function toggleStations()
-  {
+  function toggleStations() {
     var primary = $('#station-container');
     if(primary.is(':visible'))
     {
@@ -125,8 +116,7 @@ $(document).ready(function(){
   }
 
   // Schedule
-  function getSchedule()
-  {
+  function getSchedule() {
     if(departingFrom != null && arrivingAt != null)
     {
       var url    = 'core/core.php';
@@ -140,14 +130,12 @@ $(document).ready(function(){
     }
   }
 
-  function toggleSchedule()
-  {
-    if($('#schedule-container').text() != '')
-    {
+  function toggleSchedule() {
+    if($('#schedule-container').text() != '') {
       $('#schedule-container').text('');
     }
 
-    var data = tripSchedule,
+    var data   = tripSchedule,
         count  = 0,
         rowNum = 0;
 
@@ -163,10 +151,9 @@ $(document).ready(function(){
       }
 
       var startRaw = data[key]['start-raw'],
-          endRaw = data[key]['end-raw'];
+          endRaw   = data[key]['end-raw'];
 
-      function appendItems(data, row)
-      {
+      function appendItems(data, row) {
         $(`<div class="col-6-12">
             <div class="row reset">
               <div class="col-3-12 reset">
@@ -200,12 +187,11 @@ $(document).ready(function(){
       $('#schedule-container').text('Sorry! Unfortunately there are not any trains that connect those two stations.');
     }
   }
-  
+
   // ---------
   // Utilities
   // ---------
-  function isOnline()
-  {
+  function isOnline() {
     return navigator.onLine ? true : false; 
   }
 
@@ -219,10 +205,8 @@ $(document).ready(function(){
     return true;
   }
 
-  function toggleBtn(btn, className)
-  {
-    if(btn.hasClass(className))
-    {
+  function toggleBtn(btn, className) {
+    if(btn.hasClass(className)) {
       btn.removeClass(className);
     } else {
       btn.addClass(className);
@@ -230,18 +214,19 @@ $(document).ready(function(){
   }
 
   // Time
-  function timeRemaining(time)
-  {
+  function timeRemaining(time) {
     var now = splitTime(currentTime),
         next = splitTime(time),
-        diff = {hours: null,
-                minutes: null};
+        diff = {
+          hours:   null,
+          minutes: null
+        };
         
     if(now.hours < next.hours) {
       diff.hours = next.hours-now.hours;
     }
 
-    if(now.minutes < next.minutes){
+    if(now.minutes < next.minutes) {
       diff.minutes = next.minutes-now.minutes;
     } else if(now.minutes >= next.minutes){
       diff.minutes = 60 - (now.minutes-next.minutes);
@@ -255,7 +240,7 @@ $(document).ready(function(){
     var timeSplit = time.split(/:/);
     
     return {
-      hours: parseInt(timeSplit[0]), 
+      hours:   parseInt(timeSplit[0]), 
       minutes: parseInt(timeSplit[1])
     };
   }
@@ -278,8 +263,7 @@ $(document).ready(function(){
   }
 
   // Days
-  function getToday()
-  {
+  function getToday() {
     //http://stackoverflow.com/questions/1181219/determine-if-a-date-is-a-saturday-or-a-sunday-using-javascript by andrew moore
     var today = new Date();
     if(today.getDay() == 6){
@@ -299,21 +283,22 @@ $(document).ready(function(){
 
   // User Override
   // TODO: FIX THIS MESS
-  function setDay(userDay)
-  {
-    var btn = {saturday: '#btn-wk-sat', sunday: '#btn-wk-sun', weekday: '#btn-wk-day'};
+  function setDay(userDay) {
+    var btn = {
+      saturday: '#btn-wk-sat', 
+      sunday:   '#btn-wk-sun', 
+      weekday:  '#btn-wk-day'
+    };
 
     switch('#' + userDay.attr('id')) {
       case btn.saturday:
         dayOfWk = 'saturday';
         if($(btn.saturday).hasClass('hollow')) {
           toggleBtn($(btn.saturday), 'hollow');
-          if(!$(btn.sunday).hasClass('hollow'))
-          {
+          if(!$(btn.sunday).hasClass('hollow')) {
             toggleBtn($(btn.sunday), 'hollow');
           }
-          if(!$(btn.weekday).hasClass('hollow'))
-          {
+          if(!$(btn.weekday).hasClass('hollow')) {
             toggleBtn($(btn.weekday), 'hollow');
           }
         }
@@ -322,12 +307,10 @@ $(document).ready(function(){
         dayOfWk = 'sunday';
         if($(btn.sunday).hasClass('hollow')) {
           toggleBtn($(btn.sunday), 'hollow');
-          if(!$(btn.saturday).hasClass('hollow'))
-          {
+          if(!$(btn.saturday).hasClass('hollow')) {
             toggleBtn($(btn.saturday), 'hollow');
           }
-          if(!$(btn.weekday).hasClass('hollow'))
-          {
+          if(!$(btn.weekday).hasClass('hollow')) {
             toggleBtn($(btn.weekday), 'hollow');
           }
         }
@@ -336,12 +319,10 @@ $(document).ready(function(){
         dayOfWk = 'weekday';
         if($(btn.weekday).hasClass('hollow')) {
           toggleBtn($(btn.weekday), 'hollow');
-          if(!$(btn.sunday).hasClass('hollow'))
-          {
+          if(!$(btn.sunday).hasClass('hollow')) {
             toggleBtn($(btn.sunday), 'hollow');
           }
-          if(!$(btn.saturday).hasClass('hollow'))
-          {
+          if(!$(btn.saturday).hasClass('hollow')) {
             toggleBtn($(btn.saturday), 'hollow');
           }
         }
@@ -349,12 +330,10 @@ $(document).ready(function(){
     }
   }
 
-
   // --------------
   // Online Methods
   // --------------
-  if(isOnline())
-  {
+  if(isOnline()) {
     // Online Stuff
     //console.log('Online');
   } 
@@ -362,8 +341,7 @@ $(document).ready(function(){
   // --------------
   // Offline Method
   // --------------
-  if(!isOnline())
-  {
+  if(!isOnline()) {
     // Offline Stuff
     //console.log('Offline');
   }

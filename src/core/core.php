@@ -44,7 +44,7 @@ class Core
     {
         try {
             // Get the data from the file
-            $fileData = $this->getDataFromFile($file);
+            $fileData = $this->_getDataFromFile($file);
             // Get the file keys
             $keys = $fileData[0][0];
             // Get the file data
@@ -121,7 +121,7 @@ class Core
         return $json;
     }
 
-    function getDataFromFile($filename)
+    private function _getDataFromFile($filename)
     {
         $array = array();
         // $txtFile  = "../data/txt/" . $filename;
@@ -291,18 +291,9 @@ $core = new Core();
 
 // White list for accessing php functions through ajax
 if(isset($_POST['method']) && method_exists($core, $_POST['method'])) {
-    $method   = $_POST['method'];
+    $method = $_POST['method'];
     
     switch($method) {
-        case 'getDataFromFile':
-            echo $core->ajaxGetDataFromFile($_POST['filename']);
-            break;
-        case 'getFileList':
-            echo $core->getFileList();
-            break;
-        case 'buildJson':
-            echo $core->buildJson();
-            break;
         case 'ajax_getStations':
             echo $core->ajax_getStations();
             break;

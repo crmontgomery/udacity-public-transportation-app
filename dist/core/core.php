@@ -20,13 +20,18 @@ class Core
         {
             $this->_loadDatabase();
         }
+
+        if($this->_areStopTimesFixed() == 0)
+        {
+            $this->_fixStopTimes();
+        }
     }
 
     private function _loadDatabase()
     {
         try {
             // Get file list
-            $fileList = $this-_>getDataList();
+            $fileList = $this->_getDataList();
 
             // Loop through the filelist
             foreach($fileList as $file)
@@ -64,7 +69,7 @@ class Core
     private function _addTransportDataToDb($tableName, $json)
     {
         try{
-            $table = substr($tableName, 0, strpos($tableName, '.'));;
+            $table = substr($tableName, 0, strpos($tableName, '.'));
     
             foreach($json as $record)
             {
@@ -74,7 +79,7 @@ class Core
                     $data[$key] = trim($item,'"');;
                 }
 
-                echo $this->db->insert($table, $data);
+                $this->db->insert($table, $data);
             }
 
         } catch(Exception $e) {
@@ -88,15 +93,38 @@ class Core
         {
             $table = 'settings';
             $data  = array(
-                    'data_loaded'     => 1
+                    'data_loaded' => 1,
+                    'time_fixed' => 0
                     );
 
             $this->db->insert($table, $data);
         } else {
-            $sql = 'SELECT * 
-                    FROM settings';
+            $sql = 'SELECT data_loaded 
+                    FROM settings
+                    WHERE id = 1';
 
             return $this->db->select($sql);
+        }
+    }
+
+    private function _areStopTimesFixed($loaded = false)
+    {
+        if($loaded)
+        {
+            $table = 'settings';
+            $data = array(
+                    'id' => 1,
+                    'time_fixed' => 1
+                    );
+            $where = 'id = :id';
+
+            $this->db->update($table, $data, $where);
+        } else {
+            $sql = 'SELECT time_fixed 
+                    FROM settings
+                    WHERE id = 1';
+            $timeFixed = $this->db->select($sql);
+            return $timeFixed[0]['time_fixed'];
         }
     }
 
@@ -264,6 +292,8 @@ class Core
                         $detailsSet = true;
                     }
 
+
+                    
                     $tripSchedule[] = array(
                         'trip_id'   => $trainA['trip_short_name'],
                         'start'     => date("g:i a", strtotime($trainA['arrival_time'])),
@@ -277,6 +307,48 @@ class Core
         }
         // return array($tripDetails, $tripSchedule);
         return json_encode(array('details' => $tripDetails, 'schedule' => $tripSchedule), JSON_FORCE_OBJECT);
+    }
+
+    private function _fixStopTimes()
+    {
+        $sql = 'SELECT id, arrival_time, departure_time
+                  FROM stop_times';
+
+        $stopTimes = $this->db->select($sql);
+
+        foreach($stopTimes as $Key => $stop) {
+            $arrival = $this->_fixTime($stop['arrival_time']);
+            $departure = $this->_fixTime($stop['departure_time']);
+
+            $table = 'stop_times';
+            $data = array(
+                    'id' => $stop['id'],
+                    'arrival_time' => $arrival,
+                    'departure_time'   => $departure,
+                    );
+            $where = 'id = :id ';
+
+            $this->db->update($table, $data, $where);
+        }
+
+        $this->_areStopTimesFixed(true);
+    }
+
+    // Used to fix the timestamps that are used
+    private function _fixTime($time)
+    {
+        $splode = explode(':', $time);
+        $hours = $splode[0];
+        $minutes = $splode[1];
+        $seconds = $splode[2];
+
+        if($hours > 24) {
+            $hours = $hours - 24;
+        } else if($hours == 24) {
+            $hours = 0;
+        }
+
+        return $hours . ':' . $minutes . ':' . $seconds;
     }
 
     function debug($array)

@@ -1,13 +1,13 @@
 header {
   background-color: #212121;
   color: $color-background;
-  padding: 20px 0;
+  padding: 0;
   
   button {
     background-color: transparent !important;
     color: #bdbdbd;
     font-size: 1em;
-    padding: 0;
+    padding: $pad 0;
   }
   
   a:link,

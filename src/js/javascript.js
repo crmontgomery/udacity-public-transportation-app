@@ -15,19 +15,23 @@ $(document).ready(function(){
   // -----------------
   // Universal Methods
   // -----------------
+  $('#btn-hide-missed-trains').on('click', function(){
+    // Empty for now
+  });
+
   $('#btn-depart').on('click', function() {
-    departingFrom = null;
+    if(departingFrom != null){
+      changeStation(departingFrom, 'departingFrom');
+    }
   });
 
   $('#btn-arrive').on('click', function() {
     if(arrivingAt != null){
-      toggleBtn($(arrivingAt), 'hollow');
-      arrivingAt = null;
-      toggleStations();
+      changeStation(arrivingAt, 'arrivingAt');
     }
   });
 
-  // The day is selected automatically unless the user selects on specifically
+  // The day is selected automatically unless the user selects one specifically
   $('#btn-wk-day, #btn-wk-sat, #btn-wk-sun').on('click', function() {
     setDay($(this));
     if(departingFrom != null && arrivingAt != null) {
@@ -38,15 +42,19 @@ $(document).ready(function(){
   // User selects a station from the list.
   $('#station-container').on('click', '.btn-station', function() {
     var stopId = $(this).attr('id');
+    
     toggleBtn($(this), 'active');
+
     if(departingFrom == null && arrivingAt == null) {
       setDepartLocation(stopId);
       $('#step-1').text('Departing From');
-    } else if(departingFrom != null && arrivingAt == null) {
+    } else if (departingFrom != null && arrivingAt == null) {
       setArrivalLocation(stopId);
       $('#step-2').text('Arriving At');
       getSchedule();
-    } 
+    } else if (departingFrom == null && arrivingAt != null) {
+      // empty
+    }
   });
 
   function setDepartLocation(stopId) {
@@ -59,7 +67,22 @@ $(document).ready(function(){
     $('#btn-arrive').text($('#' + stopId).text());
   }
 
-  // Stations
+  function changeStation(btn, target) {
+      toggleBtn($('#' + btn), 'active');
+      if(target == 'departingFrom') {
+        departingFrom = null;
+      } else if (target == 'arriveAt') {
+        arriveAt = null;
+      }
+      toggleStations();
+  }
+
+  // Used to swap stations and trips back and forth
+  function toggleContent() {
+
+  }
+
+  // Stations------------------------------------------------------------------------------------------
   function getStations() {
     // TODO: Change to have DATA dropped in rather than obtained from
     var url    = 'core/core.php',
@@ -82,14 +105,13 @@ $(document).ready(function(){
       function appendItems(data, row) {
         $('<div class="col-4-12 station"><button class="btn-station" id="' + data[key]['stop_id'] + '">' + data[key]['stop_name'].replace(" Caltrain", "") + '</button></div>').appendTo('#row-' + row);
       }
-      showStations();
+      transitionContent($('.station'));
 
     }, 'json');
   }
 
-  // Animates the stations being listed
-  function showStations() {
-    $stations = $('.station');
+  function transitionContent(obj) {
+    $stations = obj;
     var time = 100;
 
     $stations.each(function() {
@@ -109,13 +131,13 @@ $(document).ready(function(){
     var primary = $('#station-container');
     if(primary.is(':visible'))
     {
-      primary.fadeOut();
+      primary.fadeOut('fast');
     } else if(primary.is(':hidden')){
       primary.fadeIn();
     }
   }
 
-  // Schedule
+  // Schedule------------------------------------------------------------------------------------------
   function getSchedule() {
     if(departingFrom != null && arrivingAt != null)
     {
@@ -126,20 +148,27 @@ $(document).ready(function(){
         tripSchedule = data['schedule'];
         toggleStations();
         toggleSchedule();
-      }, 'json');
+      }, 'json').fail(function(e) {
+        console.log(e);
+      });
     }
   }
 
   function toggleSchedule() {
-    if($('#schedule-container').text() != '') {
-      $('#schedule-container').text('');
-    }
-
     var data   = tripSchedule,
         count  = 0,
         rowNum = 0;
 
     if(!isEmpty(data)) {
+
+      $('#schedule-container').find('*').not('#empty-message').remove();
+
+      $('#trip-fare').text(tripDetails['price'] + 'USD');
+
+      $('#btn-hide-missed-trains').fadeOut(function() {
+        $(this).text("Hide Missed Trains").fadeIn();
+      });
+
       for (var key in data) {
         if((count % 2) == 0 || count == 0)
         {
@@ -154,37 +183,48 @@ $(document).ready(function(){
           endRaw   = data[key]['end-raw'];
 
       function appendItems(data, row) {
-        $(`<div class="col-6-12">
-            <div class="row reset">
-              <div class="col-3-12 reset">
-                <div class="module">
-                  <span><small>Departing</small><span> <br/>
-                  <span>` + data[key]['start'] + `<span>
+        $(`<div class="col-6-12 trip` + (timeRemaining(data[key]['start-raw']) != '--' ? `` : ` hollow`) + `" id="trip-id-` + data[key]['trip_id'] + `">
+            <div class="row reset stack">
+              <div class="col-2-12 reset">
+                <div class="border-top-bottom-left module text-center">
+                  <span><small>Train</small><span><br/>
+                  <span>` + data[key]['trip_id'] + `<span>
                 </div>
               </div>
-              <div class="col-3-12 reset">
-                <div class="module">
-                  <span><small>Arriving</small><span> <br/>
-                  <span>` + data[key]['end'] + `<span>
-                </div>
-              </div>
-              <div class="col-3-12 reset">
-                <div class="module">
-                  <span><small>Duration</small><span> <br/>
-                  <span>` + data[key]['duration'] + ` Min<span>
-                </div>
-              </div>
-              <div class="col-3-12 reset">
-                <div class="module">
-                  <span><small>Departing In</small><span> <br/>
-                  <span>` + timeRemaining(data[key]['start-raw']) + `<span>
+              <div class="col-10-12 reset">
+                <div class="row reset stack">
+                  <div class="col-3-12 reset">
+                    <div class="border-top-bottom module">
+                      <span><small>Departs</small><span> <br/>
+                      <span>` + data[key]['start'] + `<span>
+                    </div>
+                  </div>
+                  <div class="col-3-12 reset">
+                    <div class="border-top-bottom module">
+                      <span><small>Arrives</small><span> <br/>
+                      <span>` + data[key]['end'] + `<span>
+                    </div>
+                  </div>
+                  <div class="col-3-12 reset">
+                    <div class="border-top-bottom module">
+                      <span><small>Duration</small><span> <br/>
+                      <span>` + data[key]['duration'] + ` Min<span>
+                    </div>
+                  </div>
+                  <div class="col-3-12 reset">
+                    <div class="border-top-right-bottom module">
+                      <span><small>Departing</small><span> <br/>
+                      <span>` + timeRemaining(data[key]['start-raw']) + `<span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>`).appendTo('#row-schedule-' + row);
       }
+      transitionContent($('.trip'), 'normal');
     } else {
-      $('#schedule-container').text('Sorry! Unfortunately there are not any trains that connect those two stations.');
+      $('#empty-message').fadeIn('slow');
     }
   }
 
@@ -213,7 +253,7 @@ $(document).ready(function(){
     }
   }
 
-  // Time
+  // Time------------------------------------------------------------------------------------------
   function timeRemaining(time) {
     var now = splitTime(currentTime),
         next = splitTime(time),
@@ -233,15 +273,32 @@ $(document).ready(function(){
       diff.hours = diff.hours - 1;
     }
 
-    return diff.hours + 'h ' + diff.minutes + 'm';
+    if ((diff.hours < 0 || diff.hours == null)) {
+      return '--';  
+    } else if (diff.hours == 0) {
+      return diff.minutes + 'm';
+    } else {
+      return diff.hours + 'h ' + diff.minutes + 'm';
+    }
+    
   }
 
   function splitTime(time) {
-    var timeSplit = time.split(/:/);
+    var timeSplit = time.split(/:/),
+        hrs = parseInt(timeSplit[0]),
+        min   = parseInt(timeSplit[1]);
     
+    if(hrs > 24) {
+      hrs = hrs - 24;
+    } else if (hrs == 24) {
+      hrs = 0;
+    }
+
+    console.log(hrs + '- ' + min);
+
     return {
-      hours:   parseInt(timeSplit[0]), 
-      minutes: parseInt(timeSplit[1])
+      hours:   hrs, 
+      minutes: min
     };
   }
 
@@ -262,7 +319,7 @@ $(document).ready(function(){
       return i;
   }
 
-  // Days
+  // Days------------------------------------------------------------------------------------------
   function getToday() {
     //http://stackoverflow.com/questions/1181219/determine-if-a-date-is-a-saturday-or-a-sunday-using-javascript by andrew moore
     var today = new Date();
@@ -293,6 +350,7 @@ $(document).ready(function(){
     switch('#' + userDay.attr('id')) {
       case btn.saturday:
         dayOfWk = 'saturday';
+        $('#step-3').text('For this weekend');
         if($(btn.saturday).hasClass('hollow')) {
           toggleBtn($(btn.saturday), 'hollow');
           if(!$(btn.sunday).hasClass('hollow')) {
@@ -305,6 +363,7 @@ $(document).ready(function(){
         break;
       case btn.sunday:
         dayOfWk = 'sunday';
+        $('#step-3').text('For this weekend');
         if($(btn.sunday).hasClass('hollow')) {
           toggleBtn($(btn.sunday), 'hollow');
           if(!$(btn.saturday).hasClass('hollow')) {
@@ -317,6 +376,7 @@ $(document).ready(function(){
         break;
       case btn.weekday:
         dayOfWk = 'weekday';
+        $('#step-3').text('For this week');
         if($(btn.weekday).hasClass('hollow')) {
           toggleBtn($(btn.weekday), 'hollow');
           if(!$(btn.sunday).hasClass('hollow')) {

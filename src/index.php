@@ -1,4 +1,5 @@
-<?php 
+<?php
+// Remove after done testing 
 include('core/core.php')
 ?>
 <!doctype html>
@@ -14,7 +15,14 @@ include('core/core.php')
 <body>
   <header>
     <div class="container">
-      <span id="title">Transportation App</span>
+      <div class="row stack">
+        <div class="col-6-12">
+          <button type="button" id="btn-title">Transportation App</button>
+        </div>
+        <div class="col-6-12 text-right">
+          <button type="button" id="btn-hide-missed-trains">&nbsp;</button>
+        </div>
+      </div>
     </div>
   </header>
   <main>
@@ -35,7 +43,7 @@ include('core/core.php')
           </div><!-- /step 2 -->
           <div class="col-4-12"><!-- step 3 -->
             <div class="module unfocus">
-              <div><small id="step-3">Step 3</small></div>
+              <div><small id="step-3">For Today</small></div>
               <div class="row">
                 <div class="col-6-12">
                   <button class="hollow" id="btn-wk-day">Weekday</button>
@@ -56,16 +64,39 @@ include('core/core.php')
         </div><!-- /row -->
       </div> <!-- /container -->
     </div> <!-- /row-x hero -->
+    <div class="row-x border-bottom" id="trip-details-row">
+      <div class="container"> <!-- information container-->
+        <div class="row" id="trip-details">
+          <div class="col-6-12" id="title"><!-- title -->
+            <h3>Train Stations</h3>
+          </div><!-- /title -->
+          <div class="col-6-12" id="trip-meta">
+            <div class="row">
+              <div class="col-4-12">
+                <span><small>Next Train</small><span> <br/>
+                <span id="">3hr 27min<span>
+              </div>
+              <div class="col-4-12">
+                <span><small>Remaining</small><span> <br/>
+                <span id="">32<span>
+              </div>
+              <div class="col-4-12">
+                <span><small>Fare</small><span> <br/>
+                <span id="trip-fare">$8.95 USD<span>
+              </div>
+            </div>
+          </div>
+        </div><!-- /trip-details -->
+      </div><!-- /container -->
+    </div> <!-- /row-x title-information -->
     <div class="container" id="primary-container">
-      <div class="row" id="trip-details">
-        <div class="col-6-12" id="time">
-          Stuff
-        </div>
-        <div class="col-6-12">
-          Things
+      <div class="row-x" id="schedule-container">
+        <div class="row" id="empty-message">
+          <div class="col-12-12 text-center">
+            Sorry! It appears there are not any connection trains between those two stations.
+          </div>
         </div>
       </div>
-      <div class="row-x" id="schedule-container"></div>
       <div id="station-container"></div>
     </div> <!-- /primary-container -->
   </main>
@@ -73,7 +104,7 @@ include('core/core.php')
     <script src="js/jquery-3.1.0.min.js"></script>
     <script src="js/javascript.min.js"></script>
     <div class="container text-center" id="footer">
-      Corey R. Montgomery
+      &nbsp;
     </div>
   </footer>
 </body>

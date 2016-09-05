@@ -363,7 +363,6 @@ $(document).ready(function(){
   }
 
   // User Override
-  // TODO: FIX THIS MESS
   function setDay(userDay) {
     var btn = {
       saturday: '#btn-wk-sat', 
@@ -375,42 +374,30 @@ $(document).ready(function(){
       case btn.saturday:
         dayOfWk = 'saturday';
         $('#step-3').text('For this weekend');
-        if($(btn.saturday).hasClass('hollow')) {
-          toggleBtn($(btn.saturday), 'hollow');
-          if(!$(btn.sunday).hasClass('hollow')) {
-            toggleBtn($(btn.sunday), 'hollow');
-          }
-          if(!$(btn.weekday).hasClass('hollow')) {
-            toggleBtn($(btn.weekday), 'hollow');
-          }
-        }
         break;
       case btn.sunday:
         dayOfWk = 'sunday';
         $('#step-3').text('For this weekend');
-        if($(btn.sunday).hasClass('hollow')) {
-          toggleBtn($(btn.sunday), 'hollow');
-          if(!$(btn.saturday).hasClass('hollow')) {
-            toggleBtn($(btn.saturday), 'hollow');
-          }
-          if(!$(btn.weekday).hasClass('hollow')) {
-            toggleBtn($(btn.weekday), 'hollow');
-          }
-        }
         break;
       case btn.weekday:
         dayOfWk = 'weekday';
         $('#step-3').text('For this week');
-        if($(btn.weekday).hasClass('hollow')) {
-          toggleBtn($(btn.weekday), 'hollow');
-          if(!$(btn.sunday).hasClass('hollow')) {
-            toggleBtn($(btn.sunday), 'hollow');
-          }
-          if(!$(btn.saturday).hasClass('hollow')) {
-            toggleBtn($(btn.saturday), 'hollow');
-          }
-        }
         break;
+    }
+
+    toggleBtnHollow(btn, dayOfWk);
+
+    function toggleBtnHollow(btn, day) {
+      var today = day;
+      for (var key in btn) {
+        if(today == key && $(btn[key]).hasClass('hollow')) {
+          // Today
+          toggleBtn($(btn[key]), 'hollow');
+        } else if(today != key && !$(btn[key]).hasClass('hollow')) {
+          // Not today
+          toggleBtn($(btn[key]), 'hollow');
+        }
+      }
     }
   }
 

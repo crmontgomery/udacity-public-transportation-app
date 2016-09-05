@@ -485,18 +485,3 @@ main #trip-details {
   margin-bottom: 0; }
   main #trip-details .module {
     background-color: transparent; }
-
-@media only screen and (min-width: 700px) {
-  body:after {
-    content: "bp-small";
-    display: none; } }
-
-@media only screen and (min-width: 500px) {
-  body:after {
-    content: "bp-medium";
-    display: none; } }
-
-@media only screen and (min-width: 300px) {
-  body:after {
-    content: "bp-large";
-    display: none; } }

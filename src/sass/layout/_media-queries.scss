@@ -1,3 +1,21 @@
+body {
+    @include bp-small() {
+        @include define-breakpoint("bp-small");
+    }  
+
+    @include bp-medium() {
+        @include define-breakpoint("bp-medium");
+    }
+
+    @include bp-large() {
+        @include define-breakpoint("bp-large");
+    }
+}
+
+
+
+
+
 // Reference: Breakpoints are from the Google Material Design Guidelines
 
 @media (max-width: 600px) {

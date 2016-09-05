@@ -107,31 +107,6 @@ main {
         border-bottom: 1px solid $background;
       }
     }
-
-    // &.hollow {
-    //   .module {
-    //     $background: #ccc;
-    //     &.border-top-bottom-left {
-    //       background-color: $color-typo !important;
-    //       color: $color-background !important;
-    //       border-top: 1px solid $background;
-    //       border-bottom: 1px solid $background;
-    //       border-left: 1px solid $background;
-    //     }
-
-    //     &.border-top-bottom {
-    //       border-top: 1px solid $background;
-    //       border-bottom: 1px solid $background;
-    //     }
-
-    //     &.border-top-right-bottom {
-    //       border-top: 1px solid $background;
-    //       border-right: 1px solid $background;
-    //       border-bottom: 1px solid $background;
-    //     }
-    //   }
-
-    // }
   }
 
   [id*='trip-id-'] {

@@ -12,6 +12,26 @@ $(document).ready(function(){
   getToday();
   startTime();
 
+  // Js media queries
+  // https://www.sitepoint.com/javascript-media-queries/
+  // media query event handler
+  if (matchMedia) {
+    var mq = window.matchMedia("(max-width: 740px)");
+    mq.addListener(widthChange);
+    widthChange(mq);
+  }
+
+  // media query change
+  function widthChange(mq) {
+    if (mq.matches) {
+      // less than 740
+      
+    } else {
+      // bigger than 740
+
+    }
+  }
+
   // -----------------
   // Universal Methods
   // -----------------
@@ -67,6 +87,7 @@ $(document).ready(function(){
     $('#btn-arrive').text($('#' + stopId).text());
   }
 
+  // TODO: Fix
   function changeStation(btn, target) {
       toggleBtn($('#' + btn), 'active');
       if(target == 'departingFrom') {
@@ -77,44 +98,11 @@ $(document).ready(function(){
       toggleStations();
   }
 
-  // Used to swap stations and trips back and forth
-  function toggleContent() {
-
-  }
-
-  // Stations------------------------------------------------------------------------------------------
-  function getStations() {
-    // TODO: Change to have DATA dropped in rather than obtained from
-    var url    = 'core/core.php',
-        count  = 0,
-        rowNum = 0;
-
-    $.post(url, {method: 'ajax_getStations'}, function(data) {
-      stationList = data;
-      //TODO: Fix to comform to standards
-      for (var key in data) {
-        if((count % 3) == 0 || count == 0) {
-          rowNum++;
-          $('<div class="row" id="row-' + rowNum +'"></div>').appendTo('#station-container');
-        }
-        //appendItems(data[key]['stop_name'], rowNum);
-        appendItems(data, rowNum);
-        count++;
-      }
-
-      function appendItems(data, row) {
-        $('<div class="col-4-12 station"><button class="btn-station" id="' + data[key]['stop_id'] + '">' + data[key]['stop_name'].replace(" Caltrain", "") + '</button></div>').appendTo('#row-' + row);
-      }
-      transitionContent($('.station'));
-
-    }, 'json');
-  }
-
   function transitionContent(obj) {
-    $stations = obj;
-    var time = 100;
+    var stations = obj,
+        time = 100;
 
-    $stations.each(function() {
+    stations.each(function() {
       var name = $(this);
       setTimeout(fadeSlow, time, name);
       time += (150);
@@ -124,6 +112,44 @@ $(document).ready(function(){
     function fadeSlow(name) {
       name.css('visibility','visible').hide().fadeIn("slow");
     }
+  }
+
+  // Used to swap stations and trips back and forth
+  function toggleContent() {
+
+  }
+
+  // Stations------------------------------------------------------------------------------------------
+  function getStations() {
+    // TODO: Change to have DATA dropped in rather than obtained from
+    var url = 'core/core.php';
+
+    $.post(url, {method: 'ajax_getStations'}, function(data) {
+      stationList = data;
+      loadStations();
+    }, 'json');
+  }
+
+  // Uses station data to load content in divs
+  function loadStations() {
+      var count  = 0,
+          rowNum = 0,
+          col    = 3;
+      //TODO: Fix to comform to standards
+      for (var key in stationList) {
+        if((count % col) == 0 || count == 0) {
+          rowNum++;
+          $('<div class="row" id="row-' + rowNum +'"></div>').appendTo('#station-container');
+        }
+        appendItems(stationList, rowNum, 4);
+        count++;
+      }
+
+      function appendItems(data, row, col) {
+        var width = col;
+        $('<div class="col-' + width + '-12 station"><button class="btn-station" id="' + data[key]['stop_id'] + '">' + data[key]['stop_name'].replace(" Caltrain", "") + '</button></div>').appendTo('#row-' + row);
+      }
+      transitionContent($('.station'));
   }
 
   // Used to hide the stations container when trips are displayed
@@ -293,8 +319,6 @@ $(document).ready(function(){
     } else if (hrs == 24) {
       hrs = 0;
     }
-
-    console.log(hrs + '- ' + min);
 
     return {
       hours:   hrs, 

@@ -383,113 +383,6 @@ header {
   #breadcrumbs li:nth-child(odd) {
     padding-top: 2px; }
 
-.modal-overlay {
-  background: #4d4d4a;
-  display: none;
-  height: 100%;
-  left: 0;
-  opacity: 0.5;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1;
-  transform: opacity 1s ease; }
-
-.modal-overlay-responsive {
-  background-color: #212121;
-  display: none;
-  height: 100%;
-  left: 0;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1;
-  transform: opacity 0.5s ease; }
-
-#modal-header {
-  padding: 10px; }
-
-#modal-title {
-  float: left; }
-
-#modal-close {
-  float: right; }
-  #modal-close button {
-    background: transparent !important;
-    color: #757575;
-    padding: 0; }
-  #modal-close button:hover {
-    color: #fff !important; }
-
-#modal-content {
-  margin: 15px 0;
-  padding: 10px; }
-
-#modal-footer button {
-  background: transparent !important;
-  color: #757575;
-  padding: 5px 10px; }
-
-#modal-footer button:hover {
-  color: #fff !important; }
-
-#modal-keep-open {
-  float: left; }
-  #modal-keep-open button {
-    padding-left: 0; }
-  #modal-keep-open i {
-    font-size: 1.5em;
-    margin: 0;
-    padding: 0;
-    vertical-align: middle; }
-  #modal-keep-open span {
-    display: -ms-inline-flexbox;
-    display: inline-flex;
-    vertical-align: middle; }
-
-#modal-cancel,
-#modal-save {
-  float: right; }
-
-#modal-cancel {
-  padding-right: 20px; }
-
-#modal-save {
-  border: 1px solid gray; }
-
-.modal-tarp {
-  background-color: #b2ff59;
-  color: #212121;
-  display: none;
-  font-size: 1.2em;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%; }
-
-#modal-edit-password .modal-tarp {
-  padding: 90px 0;
-  text-align: center; }
-
-#modal-user label, #modal-edit-password label {
-  color: #757575; }
-
-#modal-user div.row, #modal-edit-password div.row {
-  margin: 0 0 10px 0; }
-
-#modal-user input,
-#modal-user select, #modal-edit-password input,
-#modal-edit-password select {
-  background: transparent !important;
-  color: #fff;
-  padding: 10px 0; }
-
-#modal-user select option, #modal-edit-password select option {
-  background-color: #757575;
-  border: 0;
-  outline: 0; }
-
 #warning-container {
   background-color: red;
   display: none;
@@ -592,3 +485,18 @@ main #trip-details {
   margin-bottom: 0; }
   main #trip-details .module {
     background-color: transparent; }
+
+@media only screen and (min-width: 700px) {
+  body:after {
+    content: "bp-small";
+    display: none; } }
+
+@media only screen and (min-width: 500px) {
+  body:after {
+    content: "bp-medium";
+    display: none; } }
+
+@media only screen and (min-width: 300px) {
+  body:after {
+    content: "bp-large";
+    display: none; } }

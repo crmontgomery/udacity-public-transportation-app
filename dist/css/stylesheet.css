@@ -397,12 +397,9 @@ header {
 #btn-hide-missed-trains {
   width: auto; }
 
-#trip-meta {
-  visibility: hidden; }
-
 main #hero {
   background-color: #bb4430;
-  padding: 18px;
+  padding: 18px 0;
   margin-bottom: 0; }
   main #hero .row {
     margin-bottom: 0; }
@@ -485,3 +482,31 @@ main #trip-details {
   margin-bottom: 0; }
   main #trip-details .module {
     background-color: transparent; }
+
+@media (max-width: 499px) {
+  main #hero .col-4-12 {
+    clear: right;
+    margin-bottom: 0;
+    width: 100%; }
+    main #hero .col-4-12 #depart,
+    main #hero .col-4-12 #arrive {
+      padding-bottom: 0; }
+    main #hero .col-4-12 .module > div:first-child {
+      margin: 0; }
+  main #trip-details #title,
+  main #trip-details #trip-meta {
+    clear: right;
+    width: 100%; } }
+
+@media (min-width: 500px) and (max-width: 850px) {
+  main #hero .col-4-12:first-child,
+  main #hero .col-4-12:nth-child(2) {
+    margin-bottom: 18px;
+    width: 50%; }
+  main #hero .col-4-12:last-child {
+    width: 100%; } }
+
+@media (max-width: 1099px) {
+  main #hero .col-6-12,
+  main #hero .col-3-12 {
+    width: 33.33333%; } }

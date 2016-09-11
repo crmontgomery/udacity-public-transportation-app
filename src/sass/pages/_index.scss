@@ -12,13 +12,13 @@
 }
 
 #trip-meta {
-  visibility: hidden;
+  //visibility: hidden;
 }
 
 main {
   #hero {
     background-color: $color-primary;
-    padding: $pad;
+    padding: $pad 0;
     margin-bottom: 0;
 
     .row {

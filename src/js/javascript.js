@@ -3,11 +3,14 @@ $(document).ready(function(){
       arrivingAt    = null,
       dayOfWk       = null,
       currentTime   = null,
+      stationCols   = null,
+      scheduleCols  = null,
       stationList   = [],
       tripDetails   = [],
       tripSchedule  = [];
 
   // Build methods
+  // TODO: Add promises to get data before displaying it
   getStations();
   getToday();
   startTime();
@@ -17,18 +20,44 @@ $(document).ready(function(){
   // media query event handler
   if (matchMedia) {
     var mq = window.matchMedia("(max-width: 740px)");
+    var mq2 = window.matchMedia("(max-width: 530px)");
+    var mq3 = window.matchMedia("(max-width: 1100px)");
     mq.addListener(widthChange);
+    mq2.addListener(widthChange2);
+    mq3.addListener(widthChange3);
     widthChange(mq);
+    widthChange2(mq2);
+    widthChange3(mq3);
   }
 
   // media query change
   function widthChange(mq) {
     if (mq.matches) {
       // less than 740
-      
+      stationCols = 2;
+      loadStations(stationCols);
     } else {
       // bigger than 740
+      stationCols = 3;
+      loadStations(stationCols);
+    }
+  }
 
+  function widthChange2(mq) {
+    if (mq.matches) {
+      // less than 530
+      stationCols = 1;
+      loadStations(stationCols);
+    } 
+  }
+
+  function widthChange3(mq) {
+    if (mq.matches) {
+      // less than 1100
+      $('#btn-wk-day').text('M-F');
+    } else {
+      // bigger than 1100
+      $('#btn-wk-day').text('Weekday');
     }
   }
 
@@ -126,22 +155,32 @@ $(document).ready(function(){
 
     $.post(url, {method: 'ajax_getStations'}, function(data) {
       stationList = data;
-      loadStations();
+      loadStations(stationCols);
     }, 'json');
   }
 
   // Uses station data to load content in divs
-  function loadStations() {
+  function loadStations(numCol) {
       var count  = 0,
           rowNum = 0,
-          col    = 3;
+          col    = null;
+
+      $('#station-container').html('');
+      if (numCol == 3) {
+        col = 4;
+      } else if(numCol == 2) {
+        col = 6;
+      } else if(numCol == 1) {
+        col = 12;
+      }
+
       //TODO: Fix to comform to standards
       for (var key in stationList) {
-        if((count % col) == 0 || count == 0) {
+        if((count % numCol) == 0 || count == 0) {
           rowNum++;
           $('<div class="row" id="row-' + rowNum +'"></div>').appendTo('#station-container');
         }
-        appendItems(stationList, rowNum, 4);
+        appendItems(stationList, rowNum, col);
         count++;
       }
 
@@ -150,6 +189,7 @@ $(document).ready(function(){
         $('<div class="col-' + width + '-12 station"><button class="btn-station" id="' + data[key]['stop_id'] + '">' + data[key]['stop_name'].replace(" Caltrain", "") + '</button></div>').appendTo('#row-' + row);
       }
       transitionContent($('.station'));
+      $('#title h3').text('Train Stations');
   }
 
   // Used to hide the stations container when trips are displayed
@@ -173,14 +213,14 @@ $(document).ready(function(){
         tripDetails  = data['details'][0];
         tripSchedule = data['schedule'];
         toggleStations();
-        toggleSchedule();
+        loadSchedule();
       }, 'json').fail(function(e) {
         console.log(e);
       });
     }
   }
 
-  function toggleSchedule() {
+  function loadSchedule() {
     var data   = tripSchedule,
         count  = 0,
         rowNum = 0;
@@ -249,6 +289,7 @@ $(document).ready(function(){
           </div>`).appendTo('#row-schedule-' + row);
       }
       transitionContent($('.trip'), 'normal');
+      $('#title h3').text('Train Schedule');
     } else {
       $('#empty-message').fadeIn('slow');
     }
@@ -400,6 +441,19 @@ $(document).ready(function(){
       }
     }
   }
+
+  // ServiceWorker is a progressive technology. Ignore unsupported browsers
+  if ('serviceWorker' in navigator) {
+    console.log('CLIENT: service worker registration in progress.');
+    navigator.serviceWorker.register('js/service-worker.js').then(function() {
+      console.log('CLIENT: service worker registration complete.');
+    }, function() {
+      console.log('CLIENT: service worker registration failure.');
+    });
+  } else {
+    console.log('CLIENT: service worker is not supported.');
+  }
+
 
   // --------------
   // Online Methods

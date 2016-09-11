@@ -1,40 +1,66 @@
-// Reference: Breakpoints are from the Google Material Design Guidelines
+@media (max-width: 499px) {
+  main {
+    #hero {
+      .col-4-12 {
+        clear: right;
+        margin-bottom: 0;
+        width: 100%;
 
-@media (max-width: 600px) {
+        #depart,
+        #arrive {
+          padding-bottom: 0;
+        }
+
+        .module > div:first-child {
+          margin: 0;
+        }
+      }
+    }
   
-  
+    #trip-details {
+      #title,
+      #trip-meta {
+        clear: right;
+        width: 100%;
+      }
+    }
+  }
 }
 
-// Tablet portrait
-@media (max-width: 720px) {
- 
-  
+@media (min-width: 500px) AND  (max-width: 850px) {
+  main {
+    #hero {
+      .col-4-12:first-child,
+      .col-4-12:nth-child(2) {
+        margin-bottom: 18px;
+        width: 50%
+      }
+      .col-4-12:last-child {
+        width: 100%;
+      }
+    }
+  }
 }
 
-// Tablet landscape
-@media (min-width: 721px) AND (max-width: 959px) {
-  
-  
+
+@media (min-width: 820px) AND (max-width: 1099px) {
+}
+
+@media (max-width: 1099px) {
+  main {
+    #hero {
+      $single: 8.33333333333333%;
+      
+      .col-6-12,
+      .col-3-12 {
+        width: $single * 4;
+      }
+    }
+  }
 }
 
 //Desktop
 // Window large
-@media (min-width: 960px) {
+@media (min-width: 1100px) {
   
-}
-
-// Height media queries for modals
-// Sign Up Modal
-@media (max-height: 721px) {
-  
-}
-
-// Sign In Modal
-@media (max-height: 581px) {
-  
-}
-
-// Event-modal
-@media (max-height: 351px) {
- 
 }
